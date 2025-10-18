@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RunicLab.Views.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+            <Image
+                Source="schluessel_kreis.png"
+                HeightRequest="285"
+                Aspect="AspectFit"
+                SemanticProperties.Description="Schlüssel-Kreis" />
+
+            <Label
+                Text="RunicLab"
+                Style="{StaticResource Headline}"
+                SemanticProperties.HeadingLevel="Level1" />
+
+            <Label
+                Text="Hier kannst du Text-Verschlüsselungen ausprobieren."
+                Style="{StaticResource SubHeadline}"
+                SemanticProperties.HeadingLevel="Level2"
+                SemanticProperties.Description="Hier kannst du Text-Verschlüsselungen ausprobieren." />
+
+            <Button
+                x:Name="btnCaeserVerfahren"
+                Text="Cäser-Verfahren" 
+                Clicked="OnCaeserClicked"
+                HorizontalOptions="Fill" /> 
+            
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RunicLab.Views.SettingsCaeser"
+             Title="Einstellungen"
+    Padding="40"
+    NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Settings"
+                     IconImageSource="playbutton2.png"
+                     Order="Primary"                    
+                     Priority="0"
+                     Clicked="OnCloseClicked" />
+    </ContentPage.ToolbarItems>
+    <Border
+        BackgroundColor="White"
+        StrokeShape="RoundRectangle 16"
+        Padding="20"
+        VerticalOptions="Center"
+        HorizontalOptions="Center" 
+        Shadow="True">
+
+        <VerticalStackLayout Spacing="20">
+            <Label Text="Verschiebung" />
+            <Entry x:Name="entryVerschiebung" 
+                   Keyboard="Numeric"
+                   Placeholder="3"
+                   TextChanged="OnEntryVerschiebung"/>
+
+            <Stepper x:Name="stepVerschiebung"
+                     Minimum="0"
+                     Maximum="26"
+                     Increment="1"
+                     ValueChanged="OnStepVerschiebung"/>
+
+            <Button 
+                Text="Schließen"
+                BackgroundColor="#007ACC"
+                TextColor="White"
+                Clicked="OnCloseClicked" />
+        </VerticalStackLayout>
+    </Border>
+</ContentPage>

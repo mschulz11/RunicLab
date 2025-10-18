@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="RunicLab.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:RunicLab.Views" 
+    Title="RunicLab">
+
+    <ShellContent
+        Title="Start"
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="MainPage" />
+    <ShellContent
+        Title="Cäser Verfahren"
+        ContentTemplate="{DataTemplate local:CodeCaeserVerfahren}"
+        Route="CodeCaeserVerfahren" />
+
+</Shell>
