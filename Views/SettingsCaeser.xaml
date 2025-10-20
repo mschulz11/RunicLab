@@ -1,44 +1,74 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="RunicLab.Views.SettingsCaeser"
-             Title="Einstellungen"
-    Padding="40"
-    NavigationPage.HasNavigationBar="False">
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"  
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
+            x:Class="RunicLab.Views.SettingsCaeser"  
+            Title="Einstellungen"  
+            Padding="40"  
+            NavigationPage.HasNavigationBar="False">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Settings"
-                     IconImageSource="playbutton2.png"
-                     Order="Primary"                    
-                     Priority="0"
-                     Clicked="OnCloseClicked" />
+        <ToolbarItem Text="Einstellungen"  
+                    IconImageSource="playbutton2.png"  
+                    Order="Primary"  
+                    Priority="0"  
+                    Clicked="OnCloseClicked" />
     </ContentPage.ToolbarItems>
-    <Border
-        BackgroundColor="White"
-        StrokeShape="RoundRectangle 16"
-        Padding="20"
-        VerticalOptions="Center"
-        HorizontalOptions="Center" 
-        Shadow="True">
 
-        <VerticalStackLayout Spacing="20">
-            <Label Text="Verschiebung" />
-            <Entry x:Name="entryVerschiebung" 
-                   Keyboard="Numeric"
-                   Placeholder="3"
-                   TextChanged="OnEntryVerschiebung"/>
+    <HorizontalStackLayout Spacing="10"
+       HorizontalOptions="Center"> 
+        <Border  
+       BackgroundColor="Transparent"  
+       Padding="40"  
+       VerticalOptions="Center"  
+       HorizontalOptions="Center">
 
-            <Stepper x:Name="stepVerschiebung"
-                     Minimum="0"
-                     Maximum="26"
-                     Increment="1"
-                     ValueChanged="OnStepVerschiebung"/>
+            <VerticalStackLayout Spacing="10">
+                <Label x:Name="lbVerschiebung"  
+                  FontSize="18"  
+                  Text="Verschiebung" />
+                <HorizontalStackLayout Spacing="10">
+                    <Entry x:Name="entryVerschiebung"  
+                      Keyboard="Numeric"  
+                      Placeholder="3"  
+                      HorizontalTextAlignment="Center"  
+                      TextChanged="OnEntryVerschiebung"/>
 
-            <Button 
-                Text="Schließen"
-                BackgroundColor="#007ACC"
-                TextColor="White"
-                Clicked="OnCloseClicked" />
-        </VerticalStackLayout>
-    </Border>
+                    <Stepper x:Name="stepVerschiebung"  
+                        Increment="1"  
+                        HorizontalOptions="Center"  
+                        ValueChanged="OnStepVerschiebung" />
+                </HorizontalStackLayout>
+
+                <Slider x:Name="sliderVerschiebung"  
+                   ValueChanged="OnSliederVerschiebung" />
+                <Button x:Name="btnSchliessen"  
+                   Text="Schließen"  
+                   Clicked="OnCloseClicked" />
+            </VerticalStackLayout>
+        </Border>
+
+        <Border  
+       BackgroundColor="Transparent"  
+       Padding="40"  
+       VerticalOptions="Fill"  
+       HorizontalOptions="Fill">
+            <VerticalStackLayout Spacing="10">
+                <Label x:Name="lbVerschiebBeispiel"  
+                       FontSize="18"  
+                       Text="Beispiel-Verschiebung" />
+                <Grid x:Name="AlphabetGrid"
+                      Padding="10"
+                      ColumnSpacing="10"
+                      RowSpacing="5">                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                </Grid>
+
+            </VerticalStackLayout>
+        </Border>
+    </HorizontalStackLayout>
+
 </ContentPage>
