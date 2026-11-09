@@ -7,49 +7,56 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Einstellungen"
                      IconImageSource="playbutton1.png"
-                     Order="Primary"                    
+                     Order="Primary"
                      Priority="0"
                      Clicked="OnSettingsClicked" />
     </ContentPage.ToolbarItems>
-        <ScrollView>
+    <ScrollView>
         <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
             <Label Text="Das Caesar-Verfahren, auch bekannt als Cäsar-Chiffre, ist ein einfaches symmetrisches Verschlüsselungsverfahren, das auf der Verschiebung des Alphabets basiert." />
-            <Label 
+            <Label
                 Style="{StaticResource SubHeadline}"
                 Text="Funktionsweise" />
             <Label Text="Die Cäsar-Chiffre funktioniert durch die Verschiebung der Buchstaben im Alphabet um eine feste Anzahl von Positionen. Zum Beispiel, bei einer Verschiebung um drei Stellen wird der Buchstabe 'A' zu 'D', 'B' zu 'E' und so weiter. Wenn das Ende des Alphabets erreicht wird, wird die Zählung wieder am Anfang fortgesetzt. Dies bedeutet, dass 'Z' bei einer Verschiebung um drei zu 'C' wird."></Label>
             <Border
-     Stroke="Gray"  
-     StrokeThickness="1"
-     StrokeShape="RoundRectangle 8"
-     Padding="10">
-                <Editor 
-                x:Name="quellText" 
-                Placeholder="Text hier eingeben..." 
-                HeightRequest="120" 
-                TextChanged="OnQuellTextChanged"/>
-            </Border>
-            <Button
-                x:Name="btnVerschluesseln"
-                Text="Verschlüsseln"  
-                Clicked="OnVerschluesseln"
-                HorizontalOptions="Fill" />
-            
-            <Border
-                Stroke="Gray"  
+                Stroke="Gray"
                 StrokeThickness="1"
                 StrokeShape="RoundRectangle 8"
                 Padding="10">
-                <Label 
-                   x:Name="zielText"
+                <Editor
+                    x:Name="quellText"
+                    Placeholder="Text hier eingeben..."
+                    HeightRequest="120" />
+            </Border>
+
+            <Label
+                x:Name="lbModusAnzeige"
+                FontSize="12"
+                TextColor="Gray"
+                HorizontalOptions="Center"
+                Text="Modus: Verschlüsseln (änderbar in den Einstellungen)" />
+
+            <Button
+                x:Name="btnAktion"
+                Text="Verschlüsseln"
+                Clicked="OnAktionClicked"
+                HorizontalOptions="Fill" />
+
+            <Border
+                Stroke="Gray"
+                StrokeThickness="1"
+                StrokeShape="RoundRectangle 8"
+                Padding="10">
+                <Label
+                    x:Name="zielText"
                     Text=""
-                   FontSize="18"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center" />
+                    FontSize="18"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center" />
             </Border>
         </VerticalStackLayout>
     </ScrollView>
-   
+
 </ContentPage>
