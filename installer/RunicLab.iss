@@ -6,11 +6,18 @@
 ; Compile:  "C:\Users\<user>\AppData\Local\Programs\Inno Setup 6\ISCC.exe" RunicLab.iss
 
 #define AppName        "RunicLab"
-#define AppVersion     "1.0"
 #define AppPublisher   "mschulz11"
 #define AppURL         "https://github.com/mschulz11/RunicLab"
 #define AppExeName     "RunicLab.exe"
-#define PublishDir     "..\..\dist\RunicLab-win-x64"
+
+; Von außen überschreibbar: ISCC.exe RunicLab.iss /DAppVersion=1.1
+#ifndef AppVersion
+  #define AppVersion   "1.0"
+#endif
+
+#ifndef PublishDir
+  #define PublishDir   "..\..\dist\RunicLab-win-x64"
+#endif
 
 [Setup]
 AppId={{64FA7B27-FA70-478B-9109-F51D699300E2}

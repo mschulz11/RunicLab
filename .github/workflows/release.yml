@@ -1,0 +1,154 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version ohne führendes v, z. B. 1.1"
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+jobs:
+  release:
+    name: Build & Release
+    runs-on: windows-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+          cache: true
+          cache-dependency-path: |
+            RunicLab.csproj
+            tests/RunicLab.Tests/RunicLab.Tests.csproj
+
+      - name: Install MAUI workloads
+        run: dotnet workload install maui-android maui-windows --skip-sign-check
+
+      - name: Install Android SDK dependencies
+        run: >
+          dotnet build RunicLab.csproj -f net10.0-android
+          -t:InstallAndroidDependencies
+          -p:AndroidSdkDirectory="$env:ANDROID_HOME"
+          -p:AcceptAndroidSdkLicenses=True
+
+      - name: Test
+        run: dotnet test tests/RunicLab.Tests/RunicLab.Tests.csproj -c Release
+
+      - name: Resolve version
+        id: version
+        shell: pwsh
+        run: |
+          $raw = if ("${{ github.event_name }}" -eq "workflow_dispatch") { "${{ inputs.version }}" } else { "${{ github.ref_name }}" }
+          $version = $raw.TrimStart('v')
+          if ($version -notmatch '^\d+\.\d+(\.\d+)?$') {
+            throw "Ungültige Version: '$raw' (erwartet v1.2 oder 1.2.3)"
+          }
+          "version=$version" >> $env:GITHUB_OUTPUT
+          Write-Host "Version: $version"
+
+      - name: Decode Android keystore
+        shell: pwsh
+        env:
+          KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+        run: |
+          if (-not $env:KEYSTORE_BASE64) { throw "Secret ANDROID_KEYSTORE_BASE64 fehlt" }
+          $path = Join-Path $env:RUNNER_TEMP "release.keystore"
+          [IO.File]::WriteAllBytes($path, [Convert]::FromBase64String($env:KEYSTORE_BASE64))
+          "KEYSTORE_PATH=$path" >> $env:GITHUB_ENV
+
+      - name: Publish signed Android APK
+        shell: pwsh
+        env:
+          KEYSTORE_PASS: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_PASS: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+        run: |
+          dotnet publish RunicLab.csproj `
+            -f net10.0-android -c Release `
+            -p:TargetFrameworks=net10.0-android `
+            -p:RuntimeIdentifier=android-arm64 `
+            -p:AndroidPackageFormat=apk `
+            -p:AndroidKeyStore=true `
+            -p:AndroidSigningKeyStore="$env:KEYSTORE_PATH" `
+            -p:AndroidSigningKeyAlias="$env:KEY_ALIAS" `
+            -p:AndroidSigningKeyPass="$env:KEY_PASS" `
+            -p:AndroidSigningStorePass="$env:KEYSTORE_PASS" `
+            -p:ApplicationDisplayVersion="${{ steps.version.outputs.version }}" `
+            -p:ApplicationVersion="${{ github.run_number }}" `
+            -p:AndroidSdkDirectory="$env:ANDROID_HOME" `
+            -o artifacts/apk
+          if ($LASTEXITCODE -ne 0) { throw "Android-Publish fehlgeschlagen" }
+
+      - name: Verify APK signature
+        shell: pwsh
+        run: |
+          $apk = Get-ChildItem artifacts/apk/*-Signed.apk | Select-Object -First 1
+          if (-not $apk) { throw "Keine signierte APK gefunden" }
+          $apksigner = Join-Path $env:ANDROID_HOME "build-tools/36.0.0/apksigner.bat"
+          & $apksigner verify --print-certs $apk.FullName
+          if ($LASTEXITCODE -ne 0) { throw "APK-Signatur ungültig" }
+          Copy-Item $apk.FullName "artifacts/RunicLab-${{ steps.version.outputs.version }}-arm64.apk"
+
+      - name: Publish Windows
+        run: >
+          dotnet publish RunicLab.csproj
+          -f net10.0-windows10.0.19041.0
+          -c Release
+          -r win-x64
+          --self-contained true
+          -p:TargetFrameworks=net10.0-windows10.0.19041.0
+          -p:WindowsPackageType=None
+          -p:WindowsAppSDKSelfContained=true
+          -p:ApplicationDisplayVersion="${{ steps.version.outputs.version }}"
+          -p:ApplicationVersion="${{ github.run_number }}"
+          -o dist/RunicLab-win-x64
+
+      - name: Install Inno Setup
+        run: choco install innosetup --no-progress -y
+
+      - name: Build Windows installer
+        shell: pwsh
+        run: |
+          $iscc = "C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
+          & $iscc "installer\RunicLab.iss" "/DAppVersion=${{ steps.version.outputs.version }}"
+          if ($LASTEXITCODE -ne 0) { throw "Inno-Setup-Compile fehlgeschlagen" }
+          Get-ChildItem dist/*.exe | Format-Table Name, Length
+
+      - name: Create GitHub release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          $version = "${{ steps.version.outputs.version }}"
+          $tag = "v$version"
+          $apk = "artifacts/RunicLab-$version-arm64.apk"
+          $setup = Get-ChildItem "dist/RunicLab-Setup-$version-win-x64.exe" -ErrorAction SilentlyContinue
+          if (-not $setup) { throw "Setup-Exe nicht gefunden" }
+          gh release create $tag $apk $setup.FullName `
+            --title "RunicLab $version" `
+            --generate-notes `
+            --target "${{ github.sha }}"
+
+      - name: Cleanup keystore
+        if: always()
+        shell: pwsh
+        run: |
+          if ($env:KEYSTORE_PATH -and (Test-Path $env:KEYSTORE_PATH)) { Remove-Item $env:KEYSTORE_PATH -Force }
