@@ -19,6 +19,10 @@
   #define PublishDir   "..\..\dist\RunicLab-win-x64"
 #endif
 
+#ifndef OutputDir
+  #define OutputDir    "..\..\dist"
+#endif
+
 [Setup]
 AppId={{64FA7B27-FA70-478B-9109-F51D699300E2}
 AppName={#AppName}
@@ -32,7 +36,7 @@ DefaultDirName={autopf}\{#AppName}
 DefaultGroupName={#AppName}
 DisableProgramGroupPage=yes
 LicenseFile=..\LICENSE.txt
-OutputDir=..\..\dist
+OutputDir={#OutputDir}
 OutputBaseFilename={#AppName}-Setup-{#AppVersion}-win-x64
 SetupIconFile={#PublishDir}\appicon.ico
 UninstallDisplayIcon={app}\{#AppExeName}

@@ -121,16 +121,14 @@ jobs:
           -p:ApplicationVersion="${{ github.run_number }}"
           -o dist/RunicLab-win-x64
 
-      - name: Install Inno Setup
-        run: choco install innosetup --no-progress -y
-
-      - name: Build Windows installer
+      - name: Package Windows build
         shell: pwsh
         run: |
-          $iscc = "C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
-          & $iscc "installer\RunicLab.iss" "/DAppVersion=${{ steps.version.outputs.version }}"
-          if ($LASTEXITCODE -ne 0) { throw "Inno-Setup-Compile fehlgeschlagen" }
-          Get-ChildItem dist/*.exe | Format-Table Name, Length
+          $version = "${{ steps.version.outputs.version }}"
+          if (-not (Test-Path "dist/RunicLab-win-x64/RunicLab.exe")) { throw "Windows-Publish fehlt in dist/RunicLab-win-x64" }
+          $zip = "artifacts/RunicLab-$version-win-x64.zip"
+          Compress-Archive -Path "dist/RunicLab-win-x64/*" -DestinationPath $zip -CompressionLevel Optimal
+          Get-Item $zip | Format-Table Name, Length
 
       - name: Create GitHub release
         shell: pwsh
@@ -140,12 +138,11 @@ jobs:
           $version = "${{ steps.version.outputs.version }}"
           $tag = "v$version"
           $apk = "artifacts/RunicLab-$version-arm64.apk"
-          $setup = Get-ChildItem "dist/RunicLab-Setup-$version-win-x64.exe" -ErrorAction SilentlyContinue
-          if (-not $setup) { throw "Setup-Exe nicht gefunden" }
-          gh release create $tag $apk $setup.FullName `
+          $zip = "artifacts/RunicLab-$version-win-x64.zip"
+          if (-not (Test-Path $zip)) { throw "Windows-Zip nicht gefunden" }
+          gh release create $tag $apk $zip `
             --title "RunicLab $version" `
-            --generate-notes `
-            --target "${{ github.sha }}"
+            --generate-notes
 
       - name: Cleanup keystore
         if: always()
