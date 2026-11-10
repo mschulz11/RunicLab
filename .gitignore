@@ -361,3 +361,13 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+# Signing material (never commit)
+*.keystore
+*.jks
+keys/
+*.p12
+*.pfx
+
+# Build output
+artifacts/
+dist/
