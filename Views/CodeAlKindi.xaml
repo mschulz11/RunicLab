@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RunicLab.Views.CodeAlKindi"
+             Title="Häufigkeitsanalyse">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Einstellungen"
+                     IconImageSource="playbutton1.png"
+                     Order="Primary"
+                     Priority="0"
+                     Clicked="OnSettingsClicked" />
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30,0" Spacing="20">
+
+            <Label Style="{StaticResource SubHeadline}"
+                   Text="Al-Kindi und die Häufigkeitsanalyse"
+                   SemanticProperties.HeadingLevel="Level1" />
+
+            <Label Text="Nicht jede Verschlüsselung muss „geknackt“ werden, indem man alle Möglichkeiten durchprobiert. Man kann auch die Sprache selbst befragen: In jedem längeren Text kommen manche Buchstaben viel häufiger vor als andere. Diesen Umweg über die Statistik hat der arabische Gelehrte Al-Kindi im 9. Jahrhundert systematisch beschrieben – es ist der erste bekannte Text über Kryptoanalyse." />
+
+            <Label Style="{StaticResource SubHeadline}"
+                   Text="Geschichte"
+                   SemanticProperties.HeadingLevel="Level2" />
+
+            <Label Text="Abu Yusuf Yaqub ibn Ishaq al-Kindi (um 801–873) wirkte in Bagdad und schrieb die Abhandlung „Risala fi Istikhraj al-Mu'amma“ („Schrift über die Entzifferung verschlüsselter Botschaften“). Seine Beobachtung: In einer Sprache hat jeder Buchstabe eine typische Häufigkeit. Zählt man in einem Geheimtext die Zeichen, verrät deren Verteilung die Zuordnung – damit waren einfache Substitutions-Chiffren erstmals systematisch angreifbar." />
+
+            <Label Style="{StaticResource SubHeadline}"
+                   Text="Funktionsweise"
+                   SemanticProperties.HeadingLevel="Level2" />
+
+            <Label Text="Die App zählt alle Buchstaben des eingegebenen Textes und zeigt die häufigsten mit Balken und Prozentanteil. Anschließend vergleicht sie die Verteilung mit der typischen Verteilung der gewählten Sprache und schätzt daraus die Cäsar-Verschiebung – der Geheimtext wird mit dieser Verschiebung gleich entschlüsselt. Für kurze Texte ist das Verfahren unzuverlässig: Erst ab etwa 20 Buchstaben wird eine Schätzung angeboten." />
+
+            <Border Stroke="Gray" StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="10">
+                <Editor x:Name="quellText"
+                        Placeholder="Text hier eingeben..."
+                        HeightRequest="120" />
+            </Border>
+
+            <Button x:Name="btnAnalysieren"
+                    Text="Analysieren"
+                    Clicked="OnAnalysierenClicked"
+                    HorizontalOptions="Fill" />
+
+            <Border Stroke="Gray" StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="12">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Buchstabenhäufigkeit"
+                           FontAttributes="Bold"
+                           FontSize="16" />
+
+                    <Label x:Name="lbZusammenfassung"
+                           FontSize="12"
+                           TextColor="Gray"
+                           Text="Noch keine Analyse." />
+
+                    <Grid x:Name="ResultGrid"
+                          ColumnSpacing="10"
+                          RowSpacing="6" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Stroke="Gray" StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="12">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Schätzung (Cäsar)"
+                           FontAttributes="Bold"
+                           FontSize="16" />
+
+                    <Label x:Name="lbSchaetzung"
+                           FontSize="14"
+                           Text="Noch keine Schätzung." />
+
+                    <Label x:Name="lbEntschluesselt"
+                           FontSize="16"
+                           Text="" />
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

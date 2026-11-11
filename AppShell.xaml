@@ -15,4 +15,13 @@
         ContentTemplate="{DataTemplate local:CodeCaeserVerfahren}"
         Route="CodeCaeserVerfahren" />
 
+    <ShellContent
+        Title="Polybius-Quadrat"
+        ContentTemplate="{DataTemplate local:CodePolybius}"
+        Route="CodePolybius" />
+    <ShellContent
+        Title="Häufigkeitsanalyse"
+        ContentTemplate="{DataTemplate local:CodeAlKindi}"
+        Route="CodeAlKindi" />
+
 </Shell>

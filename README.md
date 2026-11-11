@@ -9,13 +9,15 @@
 ## Funktionen
 
 - **Cäser-Verfahren** – Text verschlüsseln und entschlüsseln durch Verschieben des Alphabets
+- **Polybius-Quadrat** – Buchstaben als Zahlenpaare aus einem 5×5-Gitter, mit optionalem Schlüsselwort und wählbarem Trennzeichen
+- **Häufigkeitsanalyse (Al-Kindi)** – zählt Buchstaben, zeigt Balken und Prozentanteile und schätzt daraus die Cäsar-Verschiebung eines Geheimtextes
 - **Flexible Einstellungen** – Verschiebung per Eingabefeld, Stepper oder Slider wählen (0–26), Modus (Ver-/Entschlüsseln) per RadioButton umschalten
 - **Beispiel-Alphabet** – zeigt live, wie jeder Buchstabe bei der aktuellen Einstellung verschoben wird
 - **Responsives Layout** – Einstellungsseite passt sich an Fenster- und Bildschirmgröße an
-- **Hinweise zum Verfahren** – kurze Erklärung und Sicherheitshinweis direkt in der App
+- **Hinweise zum Verfahren** – Geschichte und Funktionsweise direkt in der App
 - **Zwei Plattformen** – Android (APK) und Windows (portable ZIP)
 
-Cäser ist bewusst keine sichere Verschlüsselung – die App ist zum Lernen und Ausprobieren gedacht.
+Alle Verfahren sind bewusst keine sichere Verschlüsselung – die App ist zum Lernen und Ausprobieren gedacht.
 
 ## Download
 
@@ -62,8 +64,8 @@ dotnet test tests/RunicLab.Tests/RunicLab.Tests.csproj
 ## Projektstruktur
 
 ```
-Models/                 Chiffre-Logik (CaeserCipher) und Einstellungen – ohne MAUI-Abhängigkeit
-Views/                  Seiten: MainPage, CodeCaeserVerfahren, SettingsCaeser
+Models/                 Chiffre-Logik (CaeserCipher, PolybiusCipher, FrequencyAnalysis) – ohne MAUI-Abhängigkeit
+Views/                  Seiten: MainPage, CodeCaeserVerfahren, CodePolybius, CodeAlKindi + Einstellungsseiten
 Resources/              App-Icon, Splash, Bilder, Fonts
 Platforms/              Plattformspezifischer Startcode (Android, Windows, iOS, Mac Catalyst)
 tests/RunicLab.Tests/   xUnit-Tests für die Chiffre-Logik
@@ -78,9 +80,8 @@ Signing-Secrets (`ANDROID_KEYSTORE_BASE64`, `ANDROID_KEYSTORE_PASSWORD`, `ANDROI
 
 ## Roadmap
 
-Geplante Verfahren und Verbesserungen stehen in den [Issues](https://github.com/mschulz11/RunicLab/issues), u. a.:
+Weitere geplante Verbesserungen stehen in den [Issues](https://github.com/mschulz11/RunicLab/issues), u. a.:
 
-- [Polybius-Quadrat und Al-Kindi](https://github.com/mschulz11/RunicLab/issues/7) als weitere Verschlüsselungsseiten
 - [App-Icon überarbeiten](https://github.com/mschulz11/RunicLab/issues/8)
 
 ## Lizenz

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RunicLab.Views.SettingsPolybius"
+             Title="Einstellungen Polybius-Quadrat"
+             NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Schließen"
+                     IconImageSource="playbutton2.png"
+                     Order="Primary"
+                     Priority="0"
+                     Clicked="OnCloseClicked" />
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16,12" Spacing="12">
+
+            <!-- Karte 1: Gitter -->
+            <Border BackgroundColor="Transparent"
+                    Stroke="Gray"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 8"
+                    Padding="16,12">
+                <VerticalStackLayout Spacing="12">
+
+                    <Label FontSize="18"
+                           FontAttributes="Bold"
+                           Text="Gitter" />
+
+                    <Label FontSize="12"
+                           TextColor="Gray"
+                           Text="Das Schlüsselwort bestimmt, mit welchen Buchstaben das 5×5-Gitter beginnt. Doppelte Buchstaben und „J“ fallen weg, das restliche Alphabet füllt auf." />
+
+                    <Entry x:Name="entryKeyword"
+                           Placeholder="Schlüsselwort (optional), z. B. RUNIC"
+                           TextChanged="OnKeywordChanged" />
+
+                    <Label FontSize="18"
+                           FontAttributes="Bold"
+                           Text="Trennzeichen" />
+
+                    <Label FontSize="12"
+                           TextColor="Gray"
+                           Text="Nur für die Lesbarkeit der Zahlenpaare. Beim Entschlüsseln werden alle Zeichen außer Ziffern ignoriert." />
+
+                    <Picker x:Name="pickerSeparator"
+                            Title="Trennzeichen wählen"
+                            SelectedIndexChanged="OnSeparatorChanged" />
+
+                    <Grid ColumnDefinitions="*,Auto"
+                          ColumnSpacing="12">
+                        <Label Grid.Column="0"
+                               FontSize="14"
+                               VerticalOptions="Center"
+                               Text="Umlaute umschreiben (Ä→AE, Ö→OE, Ü→UE, ß→SS)" />
+                        <Switch x:Name="switchUmlaute"
+                                Grid.Column="1"
+                                Toggled="OnUmlauteToggled" />
+                    </Grid>
+
+                    <BoxView HeightRequest="1" Color="Gray" Opacity="0.3" Margin="0,4" />
+
+                    <Label FontSize="16"
+                           FontAttributes="Bold"
+                           Text="Vorschau" />
+
+                    <Grid x:Name="PreviewGrid"
+                          ColumnSpacing="6"
+                          RowSpacing="6" />
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Karte 2: Modus -->
+            <Border BackgroundColor="Transparent"
+                    Stroke="Gray"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 8"
+                    Padding="16,12">
+                <VerticalStackLayout Spacing="12">
+
+                    <Label FontSize="18"
+                           FontAttributes="Bold"
+                           Text="Modus" />
+
+                    <Label FontSize="12"
+                           TextColor="Gray"
+                           Text="Legt fest, ob der eingegebene Text in Koordinaten umgewandelt oder aus Koordinaten zurückgelesen wird." />
+
+                    <Grid ColumnDefinitions="*,*"
+                          ColumnSpacing="8">
+                        <RadioButton x:Name="rbVerschluesseln"
+                                     Grid.Column="0"
+                                     Content="Verschlüsseln"
+                                     GroupName="polybiusModus"
+                                     CheckedChanged="OnModusChanged" />
+                        <RadioButton x:Name="rbEntschluesseln"
+                                     Grid.Column="1"
+                                     Content="Entschlüsseln"
+                                     GroupName="polybiusModus"
+                                     CheckedChanged="OnModusChanged" />
+                    </Grid>
+
+                    <Button x:Name="btnSchliessen"
+                            Text="Schließen"
+                            Clicked="OnCloseClicked" />
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

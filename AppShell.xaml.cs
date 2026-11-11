@@ -8,6 +8,8 @@ namespace RunicLab
         {
             InitializeComponent();
             Routing.RegisterRoute(nameof(CodeCaeserVerfahren), typeof(CodeCaeserVerfahren));
+            Routing.RegisterRoute(nameof(CodePolybius), typeof(CodePolybius));
+            Routing.RegisterRoute(nameof(CodeAlKindi), typeof(CodeAlKindi));
         }
     }
 }

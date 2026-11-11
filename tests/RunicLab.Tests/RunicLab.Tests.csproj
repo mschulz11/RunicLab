@@ -10,6 +10,8 @@
   <ItemGroup>
     <!-- Nur die reine Chiffre-Logik testen, keine MAUI-Abhängigkeit -->
     <Compile Include="..\..\Models\CaeserCipher.cs" Link="CaeserCipher.cs" />
+    <Compile Include="..\..\Models\PolybiusCipher.cs" Link="PolybiusCipher.cs" />
+    <Compile Include="..\..\Models\FrequencyAnalysis.cs" Link="FrequencyAnalysis.cs" />
   </ItemGroup>
 
   <ItemGroup>

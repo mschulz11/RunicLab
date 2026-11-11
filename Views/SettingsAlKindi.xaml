@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RunicLab.Views.SettingsAlKindi"
+             Title="Einstellungen Häufigkeitsanalyse"
+             NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Schließen"
+                     IconImageSource="playbutton2.png"
+                     Order="Primary"
+                     Priority="0"
+                     Clicked="OnCloseClicked" />
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16,12" Spacing="12">
+
+            <!-- Karte 1: Sprache -->
+            <Border BackgroundColor="Transparent"
+                    Stroke="Gray"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 8"
+                    Padding="16,12">
+                <VerticalStackLayout Spacing="12">
+
+                    <Label FontSize="18"
+                           FontAttributes="Bold"
+                           Text="Sprache" />
+
+                    <Label FontSize="12"
+                           TextColor="Gray"
+                           Text="Verglichen wird mit der typischen Buchstabenverteilung dieser Sprache. Deutsch hat das „E“ als häufigsten Buchstaben, Englisch ebenfalls, aber mit anderen Anteilen." />
+
+                    <Grid ColumnDefinitions="*,*"
+                          ColumnSpacing="8">
+                        <RadioButton x:Name="rbDeutsch"
+                                     Grid.Column="0"
+                                     Content="Deutsch"
+                                     GroupName="alKindiSprache"
+                                     CheckedChanged="OnSpracheChanged" />
+                        <RadioButton x:Name="rbEnglisch"
+                                     Grid.Column="1"
+                                     Content="Englisch"
+                                     GroupName="alKindiSprache"
+                                     CheckedChanged="OnSpracheChanged" />
+                    </Grid>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Karte 2: Darstellung -->
+            <Border BackgroundColor="Transparent"
+                    Stroke="Gray"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 8"
+                    Padding="16,12">
+                <VerticalStackLayout Spacing="12">
+
+                    <Label FontSize="18"
+                           FontAttributes="Bold"
+                           Text="Darstellung" />
+
+                    <Label FontSize="12"
+                           TextColor="Gray"
+                           Text="Wie viele der häufigsten Buchstaben in der Auswertung erscheinen." />
+
+                    <Grid ColumnDefinitions="*,Auto"
+                          ColumnSpacing="12">
+                        <Label Grid.Column="0"
+                               VerticalOptions="Center"
+                               Text="Anzahl angezeigter Buchstaben" />
+                        <Stepper x:Name="stepTopAnzahl"
+                                 Grid.Column="1"
+                                 Increment="1"
+                                 VerticalOptions="Center"
+                                 ValueChanged="OnTopAnzahlChanged" />
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,Auto"
+                          ColumnSpacing="12">
+                        <Label Grid.Column="0"
+                               VerticalOptions="Center"
+                               Text="Erwartungswerte der Sprache mitanzeigen" />
+                        <Switch x:Name="switchErwartung"
+                                Grid.Column="1"
+                                Toggled="OnErwartungToggled" />
+                    </Grid>
+
+                    <Label FontSize="12"
+                           TextColor="Gray"
+                           Text="Hinweis: Die Analyse zählt nur A–Z. Ziffern, Satzzeichen und Umlaute bleiben außen vor." />
+
+                    <Button x:Name="btnSchliessen"
+                            Text="Schließen"
+                            Clicked="OnCloseClicked" />
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
