@@ -13,6 +13,7 @@ public partial class CipherEingabe : ContentView
     public CipherEingabe()
     {
         InitializeComponent();
+        KopierenControl.TextQuelle = () => AusgabeText;
     }
 
     /// <summary>Wird ausgelöst, wenn der Aktions-Button gedrückt wird.</summary>
@@ -54,26 +55,26 @@ public partial class CipherEingabe : ContentView
         set => EingabeEditor.Text = value;
     }
 
-    /// <summary>Text im Standard-Ergebnisbereich. Nur sinnvoll, solange kein eigener
-    /// Ergebnisinhalt gesetzt ist (siehe <see cref="ErgebnisInhalt"/>).</summary>
+    /// <summary>Text im Ergebnisbereich. Sobald er gefüllt ist, erscheint der Kopieren-Button.</summary>
     public string AusgabeText
     {
         get => AusgabeLabel.Text ?? string.Empty;
-        set => AusgabeLabel.Text = value;
+        set
+        {
+            AusgabeLabel.Text = value;
+            KopierenControl.IsVisible = !string.IsNullOrEmpty(value) && ErgebnisRahmen.IsVisible;
+        }
     }
 
-    /// <summary>Ersetzt den Standard-Ausgabetext durch eigenen Inhalt (z. B. ein Gitter).</summary>
-    public View? ErgebnisInhalt
-    {
-        get => ErgebnisSlot.Content;
-        set => ErgebnisSlot.Content = value;
-    }
-
-    /// <summary>Rahmen um den Ergebnisbereich ein-/ausblenden.</summary>
+    /// <summary>Rahmen um den Ergebnisbereich ein-/ausblenden (inkl. Kopieren-Button).</summary>
     public bool ErgebnisRahmenSichtbar
     {
         get => ErgebnisRahmen.IsVisible;
-        set => ErgebnisRahmen.IsVisible = value;
+        set
+        {
+            ErgebnisRahmen.IsVisible = value;
+            KopierenControl.IsVisible = value && !string.IsNullOrEmpty(AusgabeLabel.Text);
+        }
     }
 
     private void OnAktionClicked(object? sender, EventArgs e)

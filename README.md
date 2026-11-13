@@ -11,6 +11,7 @@
 - **Cäser-Verfahren** – Text verschlüsseln und entschlüsseln durch Verschieben des Alphabets
 - **Polybius-Quadrat** – Buchstaben als Zahlenpaare aus einem 5×5-Gitter, mit optionalem Schlüsselwort und wählbarem Trennzeichen
 - **Häufigkeitsanalyse (Al-Kindi)** – zählt Buchstaben, zeigt Balken und Prozentanteile und schätzt daraus die Cäsar-Verschiebung eines Geheimtextes
+- **Ergebnis kopieren** – der ver- oder entschlüsselte Text lässt sich per Knopf in die Zwischenablage legen (Android und Windows), inklusive des geschätzten Klartexts der Häufigkeitsanalyse
 - **Flexible Einstellungen** – Verschiebung per Eingabefeld, Stepper oder Slider wählen (0–26), Modus (Ver-/Entschlüsseln) per RadioButton umschalten
 - **Beispiel-Alphabet** – zeigt live, wie jeder Buchstabe bei der aktuellen Einstellung verschoben wird
 - **Responsives Layout** – Einstellungsseite passt sich an Fenster- und Bildschirmgröße an

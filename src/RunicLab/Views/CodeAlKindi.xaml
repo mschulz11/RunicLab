@@ -61,6 +61,11 @@
                     <Label x:Name="lbEntschluesselt"
                            FontSize="16"
                            Text="" />
+
+                    <!-- Auch der entschlüsselte Text der Analyse soll kopierbar sein. -->
+                    <views:KopierenButton x:Name="KopierenEntschluesselt"
+                                          IsVisible="False"
+                                          SemanticProperties.Hint="Kopiert den geschätzten Klartext in die Zwischenablage" />
                 </VerticalStackLayout>
             </Border>
 
