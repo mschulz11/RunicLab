@@ -26,7 +26,8 @@
 - [x] `dotnet build src/RunicLab/RunicLab.csproj -f net10.0-windows10.0.19041.0`
 - [x] `dotnet test tests/RunicLab.Tests/RunicLab.Tests.csproj`
 - [x] `dotnet sln RunicLab.slnx list` zeigt beide Projekte
-- [ ] Android-Build (`scripts/build-apk.sh`) – läuft in der CI
+- [x] Android-Build (`dotnet build ... -f net10.0-android -c Release`) lokal: 0 Fehler
+- [ ] CI-Lauf auf dem PR – entfällt, CI startet ab #13 erst nach dem Merge
 
 ## Risiken
 
