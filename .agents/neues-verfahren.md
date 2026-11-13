@@ -16,11 +16,16 @@ bestehenden Seite.
 
 ## 2. Oberfläche
 
-1. `Views/Code<Verfahren>.xaml` + `.xaml.cs` von der gemeinsamen Basis ableiten
-   (Base-Form aus #11), nicht von `ContentPage` kopieren.
-2. Einstellungen in `Views/Settings<Verfahren>.xaml` bzw. einer
+1. `Views/Code<Verfahren>.xaml` mit Wurzelelement `views:CipherPageBase` anlegen
+   (nicht `ContentPage`) und innerhalb des Layouts
+   `<views:CipherEingabe x:Name="CipherEingabeControl" />` einhängen.
+   Vorlage: `.architektur.md`, Abschnitt 1.
+2. Im Code-Behind von `CipherPageBase` ableiten, `EingabeVerwenden(...)` im
+   Konstruktor aufrufen und nur `EinstellungenAnwenden()`, `AktionAusfuehren()`
+   und `EinstellungsSeiteErzeugen()` implementieren.
+3. Einstellungen in `Views/Settings<Verfahren>.xaml` bzw. einer
    `*Preferences`-Klasse kapseln, damit der Zustand testbar bleibt.
-3. Navigation in `AppShell.xaml` bzw. `Views/MainPage.xaml` ergänzen.
+4. Navigation in `AppShell.xaml` bzw. `Views/MainPage.xaml` ergänzen.
 
 ## 3. Abschluss
 

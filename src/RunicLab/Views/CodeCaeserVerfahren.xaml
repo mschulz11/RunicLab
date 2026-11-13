@@ -1,62 +1,33 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="RunicLab.Views.CodeCaeserVerfahren"
-             Title="Cäser-Verfahren">
+<views:CipherPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      xmlns:views="clr-namespace:RunicLab.Views"
+                      x:Class="RunicLab.Views.CodeCaeserVerfahren"
+                      Title="Cäser-Verfahren">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Einstellungen"
-                     IconImageSource="playbutton1.png"
-                     Order="Primary"
-                     Priority="0"
-                     Clicked="OnSettingsClicked" />
-    </ContentPage.ToolbarItems>
     <ScrollView>
         <VerticalStackLayout
             Padding="30,0"
-            Spacing="25">
-            <Label Text="Das Caesar-Verfahren, auch bekannt als Cäsar-Chiffre, ist ein einfaches symmetrisches Verschlüsselungsverfahren, das auf der Verschiebung des Alphabets basiert." />
+            Spacing="20">
+
             <Label
                 Style="{StaticResource SubHeadline}"
-                Text="Funktionsweise" />
-            <Label Text="Die Cäsar-Chiffre funktioniert durch die Verschiebung der Buchstaben im Alphabet um eine feste Anzahl von Positionen. Zum Beispiel, bei einer Verschiebung um drei Stellen wird der Buchstabe 'A' zu 'D', 'B' zu 'E' und so weiter. Wenn das Ende des Alphabets erreicht wird, wird die Zählung wieder am Anfang fortgesetzt. Dies bedeutet, dass 'Z' bei einer Verschiebung um drei zu 'C' wird."></Label>
-            <Border
-                Stroke="Gray"
-                StrokeThickness="1"
-                StrokeShape="RoundRectangle 8"
-                Padding="10">
-                <Editor
-                    x:Name="quellText"
-                    Placeholder="Text hier eingeben..."
-                    HeightRequest="120" />
-            </Border>
+                Text="Das Cäser-Verfahren"
+                SemanticProperties.HeadingLevel="Level1" />
+
+            <Label Text="Das Caesar-Verfahren, auch bekannt als Cäsar-Chiffre, ist ein einfaches symmetrisches Verschlüsselungsverfahren, das auf der Verschiebung des Alphabets basiert." />
 
             <Label
-                x:Name="lbModusAnzeige"
-                FontSize="12"
-                TextColor="Gray"
-                HorizontalOptions="Center"
-                Text="Modus: Verschlüsseln (änderbar in den Einstellungen)" />
+                Style="{StaticResource SubHeadline}"
+                Text="Funktionsweise"
+                SemanticProperties.HeadingLevel="Level2" />
 
-            <Button
-                x:Name="btnAktion"
-                Text="Verschlüsseln"
-                Clicked="OnAktionClicked"
-                HorizontalOptions="Fill" />
+            <Label Text="Die Cäsar-Chiffre funktioniert durch die Verschiebung der Buchstaben im Alphabet um eine feste Anzahl von Positionen. Zum Beispiel, bei einer Verschiebung um drei Stellen wird der Buchstabe 'A' zu 'D', 'B' zu 'E' und so weiter. Wenn das Ende des Alphabets erreicht wird, wird die Zählung wieder am Anfang fortgesetzt. Dies bedeutet, dass 'Z' bei einer Verschiebung um drei zu 'C' wird." />
 
-            <Border
-                Stroke="Gray"
-                StrokeThickness="1"
-                StrokeShape="RoundRectangle 8"
-                Padding="10">
-                <Label
-                    x:Name="zielText"
-                    Text=""
-                    FontSize="18"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center" />
-            </Border>
+            <!-- Eingabe, Aktions-Button und Ergebnis: gemeinsamer Block aller Verfahren -->
+            <views:CipherEingabe x:Name="CipherEingabeControl" />
+
         </VerticalStackLayout>
     </ScrollView>
 
-</ContentPage>
+</views:CipherPageBase>

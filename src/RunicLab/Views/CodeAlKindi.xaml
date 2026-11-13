@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="RunicLab.Views.CodeAlKindi"
-             Title="Häufigkeitsanalyse">
-
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Einstellungen"
-                     IconImageSource="playbutton1.png"
-                     Order="Primary"
-                     Priority="0"
-                     Clicked="OnSettingsClicked" />
-    </ContentPage.ToolbarItems>
+<views:CipherPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      xmlns:views="clr-namespace:RunicLab.Views"
+                      x:Class="RunicLab.Views.CodeAlKindi"
+                      Title="Häufigkeitsanalyse">
 
     <ScrollView>
         <VerticalStackLayout Padding="30,0" Spacing="20">
@@ -33,16 +26,10 @@
 
             <Label Text="Die App zählt alle Buchstaben des eingegebenen Textes und zeigt die häufigsten mit Balken und Prozentanteil. Anschließend vergleicht sie die Verteilung mit der typischen Verteilung der gewählten Sprache und schätzt daraus die Cäsar-Verschiebung – der Geheimtext wird mit dieser Verschiebung gleich entschlüsselt. Für kurze Texte ist das Verfahren unzuverlässig: Erst ab etwa 20 Buchstaben wird eine Schätzung angeboten." />
 
-            <Border Stroke="Gray" StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="10">
-                <Editor x:Name="quellText"
-                        Placeholder="Text hier eingeben..."
-                        HeightRequest="120" />
-            </Border>
-
-            <Button x:Name="btnAnalysieren"
-                    Text="Analysieren"
-                    Clicked="OnAnalysierenClicked"
-                    HorizontalOptions="Fill" />
+            <!-- Eingabe und Aktions-Button: gemeinsamer Block aller Verfahren.
+                 Die Auswertung hat keinen einfachen Ausgabetext, daher wird der
+                 Standard-Ergebnisrahmen ausgeblendet (siehe Code-Behind). -->
+            <views:CipherEingabe x:Name="CipherEingabeControl" />
 
             <Border Stroke="Gray" StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="12">
                 <VerticalStackLayout Spacing="10">
@@ -80,4 +67,4 @@
         </VerticalStackLayout>
     </ScrollView>
 
-</ContentPage>
+</views:CipherPageBase>

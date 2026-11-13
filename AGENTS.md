@@ -1,7 +1,11 @@
 # AGENTS.md
 
 Anweisungen für KI-Agenten (und Menschen), die in diesem Repository arbeiten.
-Verbindliche Architektur-Referenz: [`docs/architektur.md`](docs/architektur.md).
+
+**Verbindlich:** [`.architektur.md`](.architektur.md) – Regeln, die bei jeder
+Änderung gelten (kurz, imperativ). Ausführliche Beschreibung und Begründung:
+[`docs/architektur.md`](docs/architektur.md). Bei Widerspruch gilt
+`.architektur.md`.
 
 ## Projekt in einem Satz
 
@@ -42,8 +46,9 @@ Android-APK (arm64) und Windows-ZIP bauen: `scripts/build-apk.sh`, `scripts/buil
    `src/RunicLab/Models/` (static/instance, keine `Microsoft.Maui.*`-Typen) und
    bekommen eine Testdatei in `tests/RunicLab.Tests/`, die per `<Compile Include>`
    eingebunden wird. Nur so laufen die Tests ohne MAUI-Workload.
-2. **Neue Verschlüsselungsseiten** werden von der gemeinsamen Basis abgeleitet
-   (siehe Issue #11), nicht als Copy/Paste-Duplikat angelegt.
+2. **Neue Verschlüsselungsseiten** erben von `CipherPageBase` und nutzen
+   `CipherEingabe` – nicht als Copy/Paste-Duplikat anlegen. Vorlage und
+   Pflichtmethoden: `.architektur.md`, Abschnitt 1.
 3. **Zielplattformen** sind Android und Windows. iOS/MacCatalyst/Tizen bleiben
    kompilierbar, werden aber nicht ausgeliefert und nicht getestet.
 4. **Deliverables** sind ausschließlich die signierte APK (arm64) und das
