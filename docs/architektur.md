@@ -42,10 +42,16 @@ wenig Zustand haben. Der Zustand wird über `Preferences`-Klassen gekapselt
 `CipherPageBase` (abstrakte `ContentPage`) liefert das Einstellungen-ToolbarItem,
 das Aktualisieren beim Erscheinen (`OnAppearing` → `EinstellungenAnwenden()`) und
 die Verdrahtung des gemeinsamen Blocks `CipherEingabe` (Eingabefeld,
-Statuszeile, Aktions-Button, Ergebnisrahmen). Eine Seite implementiert nur
-`EinstellungenAnwenden()`, `AktionAusfuehren()` und `EinstellungsSeiteErzeugen()`;
+Statuszeile, Aktions-Button, Ergebnisrahmen inklusive Kopieren-Button). Eine Seite
+implementiert nur `EinstellungenAnwenden()`, `AktionAusfuehren()` und
+`EinstellungsSeiteErzeugen()`;
 verfahrensspezifische Inhalte (Polybius-Gitter, Al-Kindi-Karten, Erklärtexte)
 bleiben in ihrer XAML-Datei. Verbindliche Vorlage: `.architektur.md`, Abschnitt 1.
+
+Das Kopieren der Ausgabe läuft über `Views/KopierenButton.cs`
+(`Clipboard.Default.SetTextAsync` plus kurze Rückmeldung am Button). Die Ausgabe
+bleibt ein `Label` und ist damit nicht markierbar – der Button ist der einzige
+Kopierweg, auf Android wie auf Windows.
 
 ## Verfahren
 

@@ -18,6 +18,8 @@ public partial class CodeAlKindi : CipherPageBase
         Eingabe.AktionText = "Analysieren";
         // Die Auswertung besteht aus zwei eigenen Karten statt eines Ausgabetexts.
         Eingabe.ErgebnisRahmenSichtbar = false;
+
+        KopierenEntschluesselt.TextQuelle = () => lbEntschluesselt.Text;
     }
 
     protected override void EinstellungenAnwenden()
@@ -138,6 +140,7 @@ public partial class CodeAlKindi : CipherPageBase
         {
             lbSchaetzung.Text = $"Zu wenig Buchstaben für eine Schätzung (mindestens {FrequencyAnalysis.MindestBuchstaben} nötig).";
             lbEntschluesselt.Text = string.Empty;
+            KopierenEntschluesselt.IsVisible = false;
             return;
         }
 
@@ -146,6 +149,7 @@ public partial class CodeAlKindi : CipherPageBase
             : $"Vermutete Verschiebung: {guess.Shift} (Chi-Quadrat {guess.Score:F1} – kleiner ist besser).";
 
         lbEntschluesselt.Text = CaeserCipher.Decrypt(text, guess.Shift);
+        KopierenEntschluesselt.IsVisible = !string.IsNullOrEmpty(lbEntschluesselt.Text);
     }
 
     private static string Sprachname(FrequencyLanguage language) =>
