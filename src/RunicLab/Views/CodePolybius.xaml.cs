@@ -1,51 +1,42 @@
-using Microsoft.Maui.Controls.Shapes;
 using RunicLab.Models;
 
-namespace RunicLab.Views
+namespace RunicLab.Views;
+
+/// <summary>
+/// Polybius-Quadrat. Die Seite liefert Gitter und Texte; Eingabe, Button und
+/// Ausgabe kommen aus <see cref="CipherPageBase"/>.
+/// </summary>
+public partial class CodePolybius : CipherPageBase
 {
-    public partial class CodePolybius : ContentPage
+    public CodePolybius()
     {
-        public CodePolybius()
-        {
-            InitializeComponent();
-        }
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-
-            var options = PolybiusPreferences.Load();
-            bool entschluesseln = PolybiusPreferences.LoadEntschluesseln();
-
-            PolybiusGridBuilder.Fill(SquareGrid, options);
-            RefreshModus(options, entschluesseln);
-        }
-
-        /// <summary>Beschriftet den Aktions-Button passend zur gewählten Richtung.</summary>
-        private void RefreshModus(PolybiusOptions options, bool entschluesseln)
-        {
-            btnAktion.Text = entschluesseln ? "Entschlüsseln" : "Verschlüsseln";
-
-            string keyword = PolybiusCipher.BuildAlphabet(options);
-            string ersteZeile = keyword[..PolybiusCipher.GridSize];
-
-            lbModusAnzeige.Text = entschluesseln
-                ? $"Modus: Entschlüsseln – Gitter beginnt mit {ersteZeile} (änderbar in den Einstellungen)"
-                : $"Modus: Verschlüsseln – Gitter beginnt mit {ersteZeile} (änderbar in den Einstellungen)";
-        }
-
-        private async void OnSettingsClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new SettingsPolybius());
-        }
-
-        private void OnAktionClicked(object? sender, EventArgs e)
-        {
-            var options = PolybiusPreferences.Load();
-
-            zielText.Text = PolybiusPreferences.LoadEntschluesseln()
-                ? PolybiusCipher.Decrypt(quellText.Text, options)
-                : PolybiusCipher.Encrypt(quellText.Text, options);
-        }
+        InitializeComponent();
+        EingabeVerwenden(CipherEingabeControl);
     }
+
+    protected override void EinstellungenAnwenden()
+    {
+        var options = PolybiusPreferences.Load();
+        bool entschluesseln = PolybiusPreferences.LoadEntschluesseln();
+
+        PolybiusGridBuilder.Fill(SquareGrid, options);
+
+        Eingabe.AktionText = entschluesseln ? "Entschlüsseln" : "Verschlüsseln";
+
+        string ersteZeile = PolybiusCipher.BuildAlphabet(options)[..PolybiusCipher.GridSize];
+        Eingabe.ModusText = entschluesseln
+            ? $"Modus: Entschlüsseln – Gitter beginnt mit {ersteZeile} (änderbar in den Einstellungen)"
+            : $"Modus: Verschlüsseln – Gitter beginnt mit {ersteZeile} (änderbar in den Einstellungen)";
+    }
+
+    protected override void AktionAusfuehren()
+    {
+        var options = PolybiusPreferences.Load();
+
+        Eingabe.AusgabeText = PolybiusPreferences.LoadEntschluesseln()
+            ? PolybiusCipher.Decrypt(Eingabe.EingabeText, options)
+            : PolybiusCipher.Encrypt(Eingabe.EingabeText, options);
+    }
+
+    protected override Page EinstellungsSeiteErzeugen() => new SettingsPolybius();
 }

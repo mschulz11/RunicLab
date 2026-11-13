@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RunicLab.Views.CipherEingabe">
+
+    <!--
+        Gemeinsamer Eingabe-/Aktions-/Ausgabe-Block aller Verschlüsselungsseiten.
+        Wird von CipherPageBase verwendet; Seiten setzen nur Texte und Verhalten.
+    -->
+    <VerticalStackLayout Spacing="12">
+
+        <Border Stroke="Gray"
+                StrokeThickness="1"
+                StrokeShape="RoundRectangle 8"
+                Padding="10">
+            <Editor x:Name="EingabeEditor"
+                    Placeholder="Text hier eingeben..."
+                    HeightRequest="120" />
+        </Border>
+
+        <Label x:Name="ModusLabel"
+               FontSize="12"
+               TextColor="Gray"
+               HorizontalOptions="Center"
+               IsVisible="False"
+               Text="" />
+
+        <Button x:Name="AktionButton"
+                Text="Verschlüsseln"
+                Clicked="OnAktionClicked"
+                HorizontalOptions="Fill" />
+
+        <Border x:Name="ErgebnisRahmen"
+                Stroke="Gray"
+                StrokeThickness="1"
+                StrokeShape="RoundRectangle 8"
+                Padding="10">
+            <ContentView x:Name="ErgebnisSlot">
+                <Label x:Name="AusgabeLabel"
+                       Text=""
+                       FontSize="18"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
+            </ContentView>
+        </Border>
+
+    </VerticalStackLayout>
+
+</ContentView>

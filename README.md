@@ -33,6 +33,7 @@ Fertige Builds gibt es unter [Releases](https://github.com/mschulz11/RunicLab/re
 - .NET 10 (LTS) mit .NET MAUI
 - Zielplattformen: `net10.0-android`, `net10.0-windows10.0.19041.0` (iOS/Mac Catalyst sind im Projekt konfiguriert, werden aber nicht ausgeliefert)
 - UI in XAML, Shell-Navigation
+- Gemeinsame Seiten-Basis: `Views/CipherPageBase.cs` + `Views/CipherEingabe.xaml` – neue Verfahrensseiten werden abgeleitet statt kopiert (Regeln: [`.architektur.md`](.architektur.md))
 - Chiffre-Logik ohne MAUI-Abhängigkeiten (`Models/`), damit sie per Unit-Test prüfbar bleibt
 - Tests: xUnit
 - CI/CD: GitHub Actions – CI (Build + Tests) erst nach dem Merge auf `master`, signierte Releases über Tags `v*`; gemergte Branches werden automatisch gelöscht

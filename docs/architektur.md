@@ -28,13 +28,24 @@ repo-relativ, damit weder IDE noch CLI vom Arbeitsverzeichnis abhängen.
 | --- | --- | --- | --- |
 | Chiffre-Logik | `src/RunicLab/Models/` | reine Algorithmen und Options-Typen | `System.*` |
 | Persistenz | `src/RunicLab/Views/*Preferences.cs` | Lesen/Schreiben über `Microsoft.Maui.Storage.Preferences` | Models, MAUI-Essentials |
-| UI | `src/RunicLab/Views/*.xaml(.cs)`, `AppShell.xaml` | Darstellung, Events, Navigation | alles darüber |
+| Seiten-Basis | `src/RunicLab/Views/CipherPageBase.cs`, `Views/CipherEingabe.xaml` | gemeinsames Verhalten und Layout aller Verfahrensseiten | Models, Persistenz, MAUI |
+| UI | `src/RunicLab/Views/*.xaml(.cs)`, `AppShell.xaml` | Erklärtexte, verfahrensspezifische Vorschau, Navigation | alles darüber |
 | Start | `MauiProgram.cs`, `App.xaml.cs`, `Platforms/` | Host-Aufbau, DI-freier Bootstrap, Plattformcode | MAUI |
 
 Die Trennung ist bewusst schmal: Es gibt kein ViewModel-Projekt, weil die Seiten
 wenig Zustand haben. Der Zustand wird über `Preferences`-Klassen gekapselt
 (`Caeser`-Einstellungen über `AppSettings` + `SettingsCaeser`, `PolybiusPreferences`,
 `AlKindiPreferences`), damit die Logik testbar bleibt und die XAML-Dateien dünn sind.
+
+### Seiten-Basis für Verfahren
+
+`CipherPageBase` (abstrakte `ContentPage`) liefert das Einstellungen-ToolbarItem,
+das Aktualisieren beim Erscheinen (`OnAppearing` → `EinstellungenAnwenden()`) und
+die Verdrahtung des gemeinsamen Blocks `CipherEingabe` (Eingabefeld,
+Statuszeile, Aktions-Button, Ergebnisrahmen). Eine Seite implementiert nur
+`EinstellungenAnwenden()`, `AktionAusfuehren()` und `EinstellungsSeiteErzeugen()`;
+verfahrensspezifische Inhalte (Polybius-Gitter, Al-Kindi-Karten, Erklärtexte)
+bleiben in ihrer XAML-Datei. Verbindliche Vorlage: `.architektur.md`, Abschnitt 1.
 
 ## Verfahren
 

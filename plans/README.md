@@ -8,7 +8,8 @@ Offene Aufgaben gehören in GitHub-Issues.
 | Plan | Issue | Status |
 | --- | --- | --- |
 | [`12-projektstruktur.md`](12-projektstruktur.md) | #12 | umgesetzt (PR #14) |
-| [`13-pipeline.md`](13-pipeline.md) | #13 | umgesetzt |
+| [`13-pipeline.md`](13-pipeline.md) | #13 | umgesetzt (PR #15) |
+| [`11-base-form.md`](11-base-form.md) | #11 | umgesetzt |
 
 ## Vorlage
 
