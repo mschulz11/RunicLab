@@ -59,7 +59,14 @@ getestete Klasse.
 ## Build und Auslieferung
 
 - **CI** (`.github/workflows/ci.yml`): Restore, Tests, Windows-Build und
-  unsignierter Android-Build als Nachweis – auf Push und Pull Request gegen `master`.
+  unsignierter Android-Build als Nachweis – **erst nach einem Merge auf `master`**,
+  nicht bei Pull Requests. Pull Requests werden lokal verifiziert
+  (`scripts/test.sh`, `scripts/format.sh`, Windows-Build) oder manuell über
+  `workflow_dispatch` gestartet.
+- **Branch-Hygiene:** Die Repository-Einstellung „Automatically delete head
+  branches" ist aktiv (`delete_branch_on_merge = true`); zusätzlich löscht
+  `.github/workflows/cleanup-merged-branch.yml` den Head-Branch jedes als
+  gemergt geschlossenen PRs (überspringt Default-Branch und Fork-Branches).
 - **Release** (`.github/workflows/release.yml`): bei Tag `v*` oder manuell;
   baut signierte arm64-APK (Keystore aus Repository-Secrets), prüft die Signatur
   mit `apksigner`, packt den self-contained Windows-Build als ZIP und legt beides

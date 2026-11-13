@@ -4,6 +4,9 @@ Vor dem Öffnen eines Pull Requests abarbeiten:
 
 ## Build & Tests
 
+> Die CI läuft erst nach dem Merge auf `master` (Issue #13). Ein Pull Request
+> ohne lokalen grünen Build ist ein ungeprüfter Merge – diese Punkte sind Pflicht.
+
 - [ ] `dotnet build src/RunicLab/RunicLab.csproj -f net10.0-windows10.0.19041.0` ohne Warnungen, die neu sind
 - [ ] `dotnet test tests/RunicLab.Tests/RunicLab.Tests.csproj` grün
 - [ ] `dotnet format RunicLab.slnx --verify-no-changes` sauber

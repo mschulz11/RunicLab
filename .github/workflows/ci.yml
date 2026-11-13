@@ -1,9 +1,11 @@
 name: CI
 
+# Startet bewusst erst nach dem Merge auf master (Issue #13).
+# Pull Requests werden lokal verifiziert: scripts/test.sh, scripts/format.sh,
+# dotnet build src/RunicLab/RunicLab.csproj -f net10.0-windows10.0.19041.0.
+# Manuell startbar über den Actions-Tab (workflow_dispatch).
 on:
   push:
-    branches: [master]
-  pull_request:
     branches: [master]
   workflow_dispatch:
 

@@ -35,7 +35,7 @@ Fertige Builds gibt es unter [Releases](https://github.com/mschulz11/RunicLab/re
 - UI in XAML, Shell-Navigation
 - Chiffre-Logik ohne MAUI-Abhängigkeiten (`Models/`), damit sie per Unit-Test prüfbar bleibt
 - Tests: xUnit
-- CI/CD: GitHub Actions (Build + Tests bei jedem Push, signierte Releases über Tags `v*`)
+- CI/CD: GitHub Actions – CI (Build + Tests) erst nach dem Merge auf `master`, signierte Releases über Tags `v*`; gemergte Branches werden automatisch gelöscht
 
 ## Entwicklung
 
