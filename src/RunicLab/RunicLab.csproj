@@ -91,12 +91,4 @@
 	  </MauiXaml>
 	</ItemGroup>
 
-	<ItemGroup>
-	  <!-- Testprojekt liegt unter tests/ und darf nicht in die App kompiliert werden -->
-	  <Compile Remove="tests\**" />
-	  <None Remove="tests\**" />
-	  <EmbeddedResource Remove="tests\**" />
-	  <MauiXaml Remove="tests\**" />
-	</ItemGroup>
-
 </Project>

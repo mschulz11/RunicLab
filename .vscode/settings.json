@@ -1,0 +1,12 @@
+{
+  "dotnet.defaultSolution": "RunicLab.slnx",
+  "files.eol": "\r\n",
+  "[markdown]": { "files.eol": "\n" },
+  "[yaml]": { "files.eol": "\n" },
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+  },
+  "omnisharp.enableEditorConfigSupport": true,
+  "csharp.inlayHints.enableInlayHintsForImplicitObjectCreation": true
+}

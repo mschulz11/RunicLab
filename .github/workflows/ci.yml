@@ -35,7 +35,7 @@ jobs:
           dotnet-version: 10.0.x
           cache: true
           cache-dependency-path: |
-            RunicLab.csproj
+            src/RunicLab/RunicLab.csproj
             tests/RunicLab.Tests/RunicLab.Tests.csproj
 
       - name: Install MAUI workloads
@@ -43,7 +43,7 @@ jobs:
 
       - name: Install Android SDK dependencies
         run: >
-          dotnet build RunicLab.csproj -f net10.0-android
+          dotnet build src/RunicLab/RunicLab.csproj -f net10.0-android
           -t:InstallAndroidDependencies
           -p:AndroidSdkDirectory="$env:ANDROID_HOME"
           -p:AcceptAndroidSdkLicenses=True
@@ -57,14 +57,14 @@ jobs:
 
       - name: Build Windows
         run: >
-          dotnet build RunicLab.csproj
+          dotnet build src/RunicLab/RunicLab.csproj
           -f net10.0-windows10.0.19041.0
           -c Release
           -p:TargetFrameworks=net10.0-windows10.0.19041.0
 
       - name: Publish Android APK (unsigned, build proof)
         run: >
-          dotnet publish RunicLab.csproj
+          dotnet publish src/RunicLab/RunicLab.csproj
           -f net10.0-android
           -c Release
           -p:TargetFrameworks=net10.0-android
