@@ -9,9 +9,9 @@
 
   <ItemGroup>
     <!-- Nur die reine Chiffre-Logik testen, keine MAUI-Abhängigkeit -->
-    <Compile Include="..\..\Models\CaeserCipher.cs" Link="CaeserCipher.cs" />
-    <Compile Include="..\..\Models\PolybiusCipher.cs" Link="PolybiusCipher.cs" />
-    <Compile Include="..\..\Models\FrequencyAnalysis.cs" Link="FrequencyAnalysis.cs" />
+    <Compile Include="..\..\src\RunicLab\Models\CaeserCipher.cs" Link="Models\CaeserCipher.cs" />
+    <Compile Include="..\..\src\RunicLab\Models\PolybiusCipher.cs" Link="Models\PolybiusCipher.cs" />
+    <Compile Include="..\..\src\RunicLab\Models\FrequencyAnalysis.cs" Link="Models\FrequencyAnalysis.cs" />
   </ItemGroup>
 
   <ItemGroup>

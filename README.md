@@ -45,32 +45,43 @@ Voraussetzungen: [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0
 # Workloads installieren
 dotnet workload install maui-android maui-windows
 
+# Solution bzw. Projekte
+dotnet build RunicLab.slnx
+
 # Windows starten
-dotnet build RunicLab.csproj -f net10.0-windows10.0.19041.0 -t:Run
+dotnet build src/RunicLab/RunicLab.csproj -f net10.0-windows10.0.19041.0 -t:Run
 
 # Android (arm64) als APK bauen
-dotnet publish RunicLab.csproj -f net10.0-android -c Release \
-  -p:TargetFrameworks=net10.0-android \
-  -p:RuntimeIdentifier=android-arm64 \
-  -p:AndroidPackageFormat=apk -o artifacts/apk
+scripts/build-apk.sh 1.2
 ```
 
-### Tests
+### Tests und Formatierung
 
 ```bash
-dotnet test tests/RunicLab.Tests/RunicLab.Tests.csproj
+scripts/test.sh                                   # dotnet test
+scripts/format.sh                                 # Stil prüfen
+scripts/format.sh --fix                           # Stil korrigieren
+scripts/build-windows.sh                          # portables Windows-Paket nach dist/
 ```
 
 ## Projektstruktur
 
 ```
-Models/                 Chiffre-Logik (CaeserCipher, PolybiusCipher, FrequencyAnalysis) – ohne MAUI-Abhängigkeit
-Views/                  Seiten: MainPage, CodeCaeserVerfahren, CodePolybius, CodeAlKindi + Einstellungsseiten
-Resources/              App-Icon, Splash, Bilder, Fonts
-Platforms/              Plattformspezifischer Startcode (Android, Windows, iOS, Mac Catalyst)
+src/RunicLab/           MAUI-App
+  Models/               Chiffre-Logik (CaeserCipher, PolybiusCipher, FrequencyAnalysis) – ohne MAUI-Abhängigkeit
+  Views/                Seiten: MainPage, CodeCaeserVerfahren, CodePolybius, CodeAlKindi + Einstellungsseiten
+  Resources/            App-Icon, Splash, Bilder, Fonts
+  Platforms/            Plattformspezifischer Startcode (Android, Windows, iOS, Mac Catalyst)
 tests/RunicLab.Tests/   xUnit-Tests für die Chiffre-Logik
+docs/                   Architektur (docs/architektur.md) und Entscheidungen (docs/adr/)
+plans/                  Arbeitspläne für größere Umbauten
+scripts/                Build-, Test- und Formatier-Helfer
+deploy/                 Auslieferung; deploy/installer/ ist Altbestand
+.agents/                Checklisten für KI-Agenten
 .github/workflows/      ci.yml (Build & Test), release.yml (signierte Releases)
 ```
+
+Architektur und Konventionen: [`docs/architektur.md`](docs/architektur.md) und [`AGENTS.md`](AGENTS.md).
 
 ## Release erstellen
 

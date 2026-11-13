@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/RunicLab/RunicLab.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/RunicLab.Tests/RunicLab.Tests.csproj" />
+  </Folder>
+</Solution>

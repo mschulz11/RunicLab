@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Windows (Debug)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-windows",
+      "program": "${workspaceFolder}/src/RunicLab/bin/Debug/net10.0-windows10.0.19041.0/win-x64/RunicLab.exe",
+      "cwd": "${workspaceFolder}/src/RunicLab",
+      "console": "internalConsole",
+      "stopAtEntry": false
+    }
+  ]
+}

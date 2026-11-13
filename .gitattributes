@@ -61,3 +61,16 @@
 #*.PDF   diff=astextplain
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
+
+###############################################################################
+# RunicLab: Zeilenenden für Skripte und Tool-Konfiguration festnageln.
+# Bash-Skripte mit CRLF scheitern mit "bad interpreter".
+###############################################################################
+*.sh            text eol=lf
+*.md            text eol=lf
+*.yml           text eol=lf
+*.yaml          text eol=lf
+*.json          text eol=lf
+*.slnx          text eol=lf
+.editorconfig   text eol=lf
+.gitignore      text eol=lf
