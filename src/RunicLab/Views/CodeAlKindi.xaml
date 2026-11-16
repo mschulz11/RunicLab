@@ -24,7 +24,13 @@
                    Text="Funktionsweise"
                    SemanticProperties.HeadingLevel="Level2" />
 
-            <Label Text="Die App zählt alle Buchstaben des eingegebenen Textes und zeigt die häufigsten mit Balken und Prozentanteil. Anschließend vergleicht sie die Verteilung mit der typischen Verteilung der gewählten Sprache und schätzt daraus die Cäsar-Verschiebung – der Geheimtext wird mit dieser Verschiebung gleich entschlüsselt. Für kurze Texte ist das Verfahren unzuverlässig: Erst ab etwa 20 Buchstaben wird eine Schätzung angeboten." />
+            <Label Text="Die App zählt alle Buchstaben des eingegebenen Textes und zeigt die häufigsten mit Balken und Prozentanteil. Besteht die Eingabe aus Zahlenpaaren (Polybius), zählt sie die Buchstaben des entschlüsselten Textes – aus „15“ wird so ein E. Anschließend vergleicht der Verfahrensvergleich die Verteilung mit der typischen Verteilung der gewählten Sprache (Chi-Quadrat) und entschlüsselt den Geheimtext mit dem Verfahren, das am besten passt. Für kurze Texte ist das unzuverlässig: Erst ab etwa 20 Buchstaben wird verglichen." />
+
+            <Label Style="{StaticResource SubHeadline}"
+                   Text="Verfahrensvergleich"
+                   SemanticProperties.HeadingLevel="Level2" />
+
+            <Label Text="Man muss nicht wissen, womit verschlüsselt wurde: Der Vergleich probiert alle Verfahren der App blind durch – unveränderten Text, alle 26 Cäsar-Verschiebungen und, wenn die Eingabe aus Zahlenpaaren besteht, das Polybius-Quadrat (mit Standardgitter und mit dem eingestellten Schlüsselwort). Jeder entstehende Text wird mit der typischen Buchstabenverteilung verglichen (Chi-Quadrat, kleiner ist besser) und die Kandidaten werden sortiert. Bei einem Polybius-Text mit fremdem Schlüsselwort kann der Vergleich das Gitter nicht erraten – dann bleibt nur der Hinweis, dass es Koordinaten sind." />
 
             <!-- Eingabe und Aktions-Button: gemeinsamer Block aller Verfahren.
                  Die Auswertung hat keinen einfachen Ausgabetext, daher wird der
@@ -50,17 +56,17 @@
 
             <Border Stroke="Gray" StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="12">
                 <VerticalStackLayout Spacing="10">
-                    <Label Text="Schätzung (Cäsar)"
+                    <Label Text="Verfahrensvergleich"
                            FontAttributes="Bold"
                            FontSize="16" />
 
-                    <Label x:Name="lbSchaetzung"
-                           FontSize="14"
-                           Text="Noch keine Schätzung." />
+                    <Label x:Name="lbVergleichHinweis"
+                           FontSize="12"
+                           TextColor="Gray"
+                           Text="Noch kein Vergleich – Text analysieren." />
 
-                    <Label x:Name="lbEntschluesselt"
-                           FontSize="16"
-                           Text="" />
+                    <VerticalStackLayout x:Name="VergleichListe"
+                                         Spacing="10" />
                 </VerticalStackLayout>
             </Border>
 

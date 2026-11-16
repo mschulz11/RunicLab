@@ -73,6 +73,16 @@ Jedes Verfahren hat ein „Code“-Fenster (Ein-/Ausgabe) und eine Einstellungss
 Neue Verfahren folgen derselben Aufteilung und werden von einer gemeinsamen Basis
 abgeleitet (Issue #11) statt kopiert.
 
+**Vergleichsanalyse:** `Models/CipherVergleich.cs` probiert alle Verfahren blind
+durch (unveränderter Text, beste Cäsar-Verschiebung, Polybius bei
+Koordinaten-Eingabe – mit Standardgitter und konfiguriertem Schlüsselwort) und
+bewertet jeden entstehenden Klartext mit `FrequencyAnalysis.ChiQuadrat`. Kleiner
+Wert = besser; die Kandidaten stehen sortiert in `CodeAlKindi`. Ein neues
+Verfahren gehört bei Bedarf in `CipherVergleich.Analysiere` dazu, damit es im
+Vergleich mitspielt. Besteht die Eingabe aus Polybius-Zahlenpaaren, zählt die
+Buchstabenhäufigkeit den Klartext des besten Kandidaten (aus „15“ wird E), weil
+Ziffern selbst keine Buchstaben sind.
+
 ## Tests
 
 `tests/RunicLab.Tests` ist ein reines `net10.0`-Projekt ohne MAUI-Workload. Es
