@@ -128,4 +128,31 @@ public class PolybiusCipherTests
     {
         Assert.Equal("11 12", PolybiusCipher.Encrypt("A1,B!"));
     }
+
+    [Fact]
+    public void HaeufigstePaare_LiefertPaarBuchstabeUndAnzahl()
+    {
+        var options = new PolybiusOptions();
+
+        var paare = PolybiusCipher.HaeufigstePaare(PolybiusCipher.Encrypt("EEE EEE", options), options);
+
+        Assert.Equal("15", paare[0].Paar);
+        Assert.Equal('E', paare[0].Buchstabe);
+        Assert.Equal(6, paare[0].Anzahl);
+    }
+
+    [Fact]
+    public void HaeufigstePaare_NutztDasAngegebeneGitter()
+    {
+        // Standardgitter: 11 = A; mit Schlüsselwort RUNE steht dort ein R.
+        Assert.Equal('A', PolybiusCipher.HaeufigstePaare("11")[0].Buchstabe);
+        Assert.Equal('R', PolybiusCipher.HaeufigstePaare("11", new PolybiusOptions { Keyword = "RUNE" })[0].Buchstabe);
+    }
+
+    [Fact]
+    public void HaeufigstePaare_OhneZiffern_Leer()
+    {
+        Assert.Empty(PolybiusCipher.HaeufigstePaare("KEINE ZAHLEN"));
+        Assert.Empty(PolybiusCipher.HaeufigstePaare(null));
+    }
 }

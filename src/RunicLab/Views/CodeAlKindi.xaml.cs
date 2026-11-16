@@ -62,8 +62,31 @@ public partial class CodeAlKindi : CipherPageBase
                 ? $"{total} Buchstaben gezählt · entschlüsselt als {befunde[0].Verfahren} ({befunde[0].Details}) · Sprache: {Sprachname(language)}"
                 : $"{total} Buchstaben gezählt · Sprache: {Sprachname(language)}";
 
+        ZeigeGitter(text, ausKoordinaten ? befunde[0] : null);
         BuildResultGrid(frequencies, total, language);
         UpdateVergleich(befunde);
+    }
+
+    /// <summary>
+    /// Gitter zeigen, mit dem ein Koordinatentext entschlüsselt wurde – samt der
+    /// häufigsten Paare („15 = E“), damit die Häufigkeitsanalyse nachvollziehbar ist.
+    /// </summary>
+    private void ZeigeGitter(string? text, Verfahrensbefund? befund)
+    {
+        if (befund?.Gitter is not { } gitter)
+        {
+            GitterKarte.IsVisible = false;
+            return;
+        }
+
+        GitterKarte.IsVisible = true;
+        PolybiusGridBuilder.Fill(GitterRaster, gitter);
+
+        var paare = PolybiusCipher.HaeufigstePaare(text, gitter, 3);
+        lbGitterHinweis.Text = paare.Count == 0
+            ? "Zeile/Spalte im Gitter."
+            : "So wurde entschlüsselt (Zeile/Spalte): "
+              + string.Join(", ", paare.Select(p => $"{p.Paar} = {p.Buchstabe} ({p.Anzahl}×)"));
     }
 
     /// <summary>

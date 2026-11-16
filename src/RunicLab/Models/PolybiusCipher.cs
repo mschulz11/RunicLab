@@ -247,4 +247,47 @@ public static class PolybiusCipher
 
     private static char DecodePair(char zeile, char spalte, PolybiusOptions options) =>
         LetterAt(zeile - '0', spalte - '0', options) ?? UngueltigesPaar;
+
+    /// <summary>
+    /// Häufigste Koordinatenpaare eines Geheimtextes mit dem Buchstaben, zu dem sie
+    /// im angegebenen Gitter werden – z. B. „15 = E“. Sortiert nach Anzahl,
+    /// höchstens <paramref name="max"/> Einträge.
+    /// </summary>
+    public static IReadOnlyList<(string Paar, char Buchstabe, int Anzahl)> HaeufigstePaare(
+        string? cipher,
+        PolybiusOptions? options = null,
+        int max = 3)
+    {
+        if (string.IsNullOrEmpty(cipher) || max <= 0)
+        {
+            return Array.Empty<(string, char, int)>();
+        }
+
+        var opts = options ?? new PolybiusOptions();
+        var zaehler = new Dictionary<string, int>(StringComparer.Ordinal);
+        var digits = new StringBuilder(2);
+
+        foreach (char c in cipher)
+        {
+            if (!char.IsDigit(c))
+            {
+                continue;
+            }
+
+            digits.Append(c);
+            if (digits.Length == 2)
+            {
+                string paar = digits.ToString();
+                zaehler[paar] = zaehler.TryGetValue(paar, out int bisher) ? bisher + 1 : 1;
+                digits.Clear();
+            }
+        }
+
+        return zaehler
+            .OrderByDescending(e => e.Value)
+            .ThenBy(e => e.Key, StringComparer.Ordinal)
+            .Take(max)
+            .Select(e => (e.Key, DecodePair(e.Key[0], e.Key[1], opts), e.Value))
+            .ToList();
+    }
 }

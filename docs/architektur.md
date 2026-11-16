@@ -81,7 +81,10 @@ Wert = besser; die Kandidaten stehen sortiert in `CodeAlKindi`. Ein neues
 Verfahren gehört bei Bedarf in `CipherVergleich.Analysiere` dazu, damit es im
 Vergleich mitspielt. Besteht die Eingabe aus Polybius-Zahlenpaaren, zählt die
 Buchstabenhäufigkeit den Klartext des besten Kandidaten (aus „15“ wird E), weil
-Ziffern selbst keine Buchstaben sind.
+Ziffern selbst keine Buchstaben sind. Darunter zeigt die Karte „Verwendetes
+Gitter“ das Gitter dieses Kandidaten (`PolybiusGridBuilder`) und die häufigsten
+Paare (`PolybiusCipher.HaeufigstePaare`), damit die Entschlüsselung
+nachvollziehbar bleibt.
 
 ## Tests
 
