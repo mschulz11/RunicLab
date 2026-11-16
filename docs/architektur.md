@@ -48,6 +48,13 @@ implementiert nur `EinstellungenAnwenden()`, `AktionAusfuehren()` und
 verfahrensspezifische Inhalte (Polybius-Gitter, Al-Kindi-Karten, Erklärtexte)
 bleiben in ihrer XAML-Datei. Verbindliche Vorlage: `.architektur.md`, Abschnitt 1.
 
+Die Basis merkt sich die Eingabe des letzten Laufs und einen Fingerabdruck der
+Einstellungen (`EinstellungsMerkmale()`, seitenspezifisch überschrieben). Kehrt
+der Nutzer von der Einstellungsseite zurück und hat sich der Fingerabdruck
+geändert, läuft `AktionAusfuehren()` automatisch erneut – das Ergebnis passt
+damit immer zur angezeigten Statuszeile. Die Häufigkeitsanalyse hatte diese Logik
+früher selbst; sie ist jetzt an einer Stelle.
+
 Kopiert wird über die native Textauswahl: `Views/TextAuswahl.cs` hängt per
 `LabelHandler`-Mapping die Plattform-Auswahl an alle `Label` an (Android
 `SetTextIsSelectable`, Windows `IsTextSelectionEnabled`), aktiviert in

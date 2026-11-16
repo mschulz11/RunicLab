@@ -38,5 +38,12 @@ public partial class CodePolybius : CipherPageBase
             : PolybiusCipher.Encrypt(Eingabe.EingabeText, options);
     }
 
+    protected override string EinstellungsMerkmale()
+    {
+        var options = PolybiusPreferences.Load();
+
+        return $"{options.Keyword}|{options.Separator}|{options.TransliterateUmlauts}|{PolybiusPreferences.LoadEntschluesseln()}";
+    }
+
     protected override Page EinstellungsSeiteErzeugen() => new SettingsPolybius();
 }
