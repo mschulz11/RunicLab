@@ -44,6 +44,9 @@ Verhalten neuer Funktionen auf dem Emulator prüfen: `.agents/emulator-verifikat
 (Agent startet Emulator und installiert, prüft Funktionales per `uiautomator`-Dump,
 den optischen Eindruck prüft ein Mensch – keine Screenshot-Analyse).
 
+Kompletter Arbeitsablauf (Branch → Prüfung → PR → Release) als Skill:
+`.agents/skills/runiclab-workflow/SKILL.md`.
+
 ## Regeln
 
 1. **Chiffre-Logik bleibt UI-frei.** Neue Verfahren gehören als reine Klasse nach
