@@ -69,6 +69,37 @@ public static class FrequencyAnalysis
     }
 
     /// <summary>
+    /// Chi-Quadrat-Abstand der Buchstabenverteilung dieses Textes zur erwarteten
+    /// Verteilung der Sprache – kleiner heißt „passt besser“. <c>null</c>, wenn
+    /// der Text zu kurz für eine Aussage ist.
+    /// </summary>
+    public static double? ChiQuadrat(string? text, FrequencyLanguage language = FrequencyLanguage.Deutsch)
+    {
+        int[] counts = CountLetters(text, out int total);
+        if (total < MindestBuchstaben)
+        {
+            return null;
+        }
+
+        double[] expected = ErwarteteVerteilung(language);
+        double chi2 = 0;
+
+        for (int i = 0; i < counts.Length; i++)
+        {
+            double expectedCount = expected[i] * total;
+            if (expectedCount <= 0)
+            {
+                continue;
+            }
+
+            double diff = counts[i] - expectedCount;
+            chi2 += diff * diff / expectedCount;
+        }
+
+        return chi2;
+    }
+
+    /// <summary>
     /// Schätzt die Cäsar-Verschiebung durch Chi-Quadrat-Vergleich mit der
     /// erwarteten Buchstabenverteilung. <c>null</c>, wenn der Text zu kurz ist.
     /// </summary>

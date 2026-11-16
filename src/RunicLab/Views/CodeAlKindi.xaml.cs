@@ -41,15 +41,66 @@ public partial class CodeAlKindi : CipherPageBase
     private void Analysiere(string? text)
     {
         var language = AlKindiPreferences.LoadSprache();
+        var befunde = CipherVergleich.Analysiere(text, language, PolybiusPreferences.Load());
+
         var frequencies = FrequencyAnalysis.Analyze(text);
         int total = frequencies.Sum(f => f.Count);
 
+        // Zahlenpaare (Polybius) enthalten keine Buchstaben. Dann zählt die
+        // Häufigkeit des entschlüsselten Textes – Grundlage ist der beste
+        // Kandidat der Vergleichsanalyse (z. B. „15“ → E).
+        bool ausKoordinaten = total == 0 && befunde.Count > 0;
+        if (ausKoordinaten)
+        {
+            frequencies = FrequencyAnalysis.Analyze(befunde[0].Klartext);
+            total = frequencies.Sum(f => f.Count);
+        }
+
         lbZusammenfassung.Text = total == 0
             ? "Keine Buchstaben gefunden – bitte einen Text eingeben."
-            : $"{total} Buchstaben gezählt · Sprache: {Sprachname(language)}";
+            : ausKoordinaten
+                ? $"{total} Buchstaben gezählt · entschlüsselt als {befunde[0].Verfahren} ({befunde[0].Details}) · Sprache: {Sprachname(language)}"
+                : $"{total} Buchstaben gezählt · Sprache: {Sprachname(language)}";
 
         BuildResultGrid(frequencies, total, language);
-        UpdateSchaetzung(text, language);
+        UpdateVergleich(befunde);
+    }
+
+    /// <summary>
+    /// Vergleichsanalyse (#21): alle Verfahren der App durchprobieren und die
+    /// besten Kandidaten mit ihrer Bewertung anzeigen.
+    /// </summary>
+    private void UpdateVergleich(IReadOnlyList<Verfahrensbefund> befunde)
+    {
+        VergleichListe.Children.Clear();
+
+        if (befunde.Count == 0)
+        {
+            lbVergleichHinweis.Text = $"Für einen Vergleich braucht es mindestens {FrequencyAnalysis.MindestBuchstaben} Buchstaben.";
+            lbVergleichHinweis.IsVisible = true;
+            return;
+        }
+
+        lbVergleichHinweis.IsVisible = false;
+
+        var top = befunde.Take(3).ToList();
+        for (int i = 0; i < top.Count; i++)
+        {
+            var befund = top[i];
+
+            VergleichListe.Add(new Label
+            {
+                Text = $"Platz {i + 1}: {befund.Verfahren} – {befund.Details} (Chi² {befund.Guetewert:F1})",
+                FontSize = 14,
+                FontAttributes = i == 0 ? FontAttributes.Bold : FontAttributes.None
+            });
+
+            VergleichListe.Add(new Label
+            {
+                Text = befund.Klartext,
+                FontSize = i == 0 ? 16 : 14
+            });
+        }
     }
 
     private void BuildResultGrid(IReadOnlyList<LetterFrequency> frequencies, int total, FrequencyLanguage language)
@@ -124,24 +175,6 @@ public partial class CodeAlKindi : CipherPageBase
 
             row++;
         }
-    }
-
-    private void UpdateSchaetzung(string? text, FrequencyLanguage language)
-    {
-        var guess = FrequencyAnalysis.GuessCaesarShift(text, language);
-
-        if (guess is null)
-        {
-            lbSchaetzung.Text = $"Zu wenig Buchstaben für eine Schätzung (mindestens {FrequencyAnalysis.MindestBuchstaben} nötig).";
-            lbEntschluesselt.Text = string.Empty;
-            return;
-        }
-
-        lbSchaetzung.Text = guess.Shift == 0
-            ? $"Vermutete Verschiebung: 0 – der Text ist wohl schon im Klartext (Chi-Quadrat {guess.Score:F1})."
-            : $"Vermutete Verschiebung: {guess.Shift} (Chi-Quadrat {guess.Score:F1} – kleiner ist besser).";
-
-        lbEntschluesselt.Text = CaeserCipher.Decrypt(text, guess.Shift);
     }
 
     private static string Sprachname(FrequencyLanguage language) =>
