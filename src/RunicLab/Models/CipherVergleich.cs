@@ -8,7 +8,13 @@ namespace RunicLab.Models;
 /// <param name="Details">Einstellung des Verfahrens, z. B. „Verschiebung 3“.</param>
 /// <param name="Klartext">So liest sich der Geheimtext mit diesem Verfahren.</param>
 /// <param name="Guetewert">Chi-Quadrat-Abstand zur erwarteten Verteilung – kleiner ist besser.</param>
-public sealed record Verfahrensbefund(string Verfahren, string Details, string Klartext, double Guetewert);
+/// <param name="Gitter">Nur beim Polybius-Quadrat: das Gitter, mit dem entschlüsselt wurde.</param>
+public sealed record Verfahrensbefund(
+    string Verfahren,
+    string Details,
+    string Klartext,
+    double Guetewert,
+    PolybiusOptions? Gitter = null);
 
 /// <summary>
 /// Vergleichsanalyse: probiert alle Verfahren der App blind durch und ordnet sie
@@ -59,7 +65,7 @@ public static class CipherVergleich
         {
             var standard = new PolybiusOptions();
             Add(befunde, Polybius, "Standardgitter",
-                PolybiusCipher.Decrypt(text, standard), language);
+                PolybiusCipher.Decrypt(text, standard), language, standard);
 
             string? keyword = polybius?.Keyword;
             if (!string.IsNullOrWhiteSpace(keyword))
@@ -72,7 +78,7 @@ public static class CipherVergleich
                 };
 
                 Add(befunde, Polybius, $"Gitter mit Schlüsselwort „{keyword}“",
-                    PolybiusCipher.Decrypt(text, gesetzt), language);
+                    PolybiusCipher.Decrypt(text, gesetzt), language, gesetzt);
             }
         }
 
@@ -136,7 +142,8 @@ public static class CipherVergleich
         string verfahren,
         string details,
         string? klartext,
-        FrequencyLanguage language)
+        FrequencyLanguage language,
+        PolybiusOptions? gitter = null)
     {
         if (string.IsNullOrEmpty(klartext))
         {
@@ -149,6 +156,6 @@ public static class CipherVergleich
             return;
         }
 
-        befunde.Add(new Verfahrensbefund(verfahren, details, klartext, guete));
+        befunde.Add(new Verfahrensbefund(verfahren, details, klartext, guete, gitter));
     }
 }
