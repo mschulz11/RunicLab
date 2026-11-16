@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Splash-Hintergrund im Dunkelmodus (#8). Der Hellmodus nutzt den aus
+     MauiSplashScreen Color generierten Wert. -->
+<resources>
+    <color name="maui_splash_color">#ff08080d</color>
+</resources>
