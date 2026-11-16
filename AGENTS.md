@@ -40,6 +40,10 @@ dotnet format RunicLab.slnx --verify-no-changes   # Stil prüfen
 
 Android-APK (arm64) und Windows-ZIP bauen: `scripts/build-apk.sh`, `scripts/build-windows.sh`.
 
+Verhalten neuer Funktionen auf dem Emulator prüfen: `.agents/emulator-verifikation.md`
+(Agent startet Emulator und installiert, prüft Funktionales per `uiautomator`-Dump,
+den optischen Eindruck prüft ein Mensch – keine Screenshot-Analyse).
+
 ## Regeln
 
 1. **Chiffre-Logik bleibt UI-frei.** Neue Verfahren gehören als reine Klasse nach

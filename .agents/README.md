@@ -7,6 +7,7 @@ hier liegen die ausführlicheren Checklisten, die nur bei Bedarf gelesen werden.
 | --- | --- |
 | `review-checkliste.md` | Was vor dem Öffnen eines PR geprüft wird |
 | `neues-verfahren.md` | Schritt-für-Schritt-Anleitung für ein neues Verschlüsselungsverfahren |
+| `emulator-verifikation.md` | Neue Funktionen auf dem Android-Emulator prüfen (Agent bereitet vor, Mensch prüft Optik) |
 
 Regeln für diesen Ordner: keine Duplikate von `AGENTS.md`, keine Status-Notizen
 (Status gehört in Issues), nur Anweisungen, die wiederkehrend gelten.
