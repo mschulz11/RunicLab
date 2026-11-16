@@ -10,7 +10,8 @@ Offene Aufgaben gehören in GitHub-Issues.
 | [`12-projektstruktur.md`](12-projektstruktur.md) | #12 | umgesetzt (PR #14) |
 | [`13-pipeline.md`](13-pipeline.md) | #13 | umgesetzt (PR #15) |
 | [`11-base-form.md`](11-base-form.md) | #11 | umgesetzt (PR #16) |
-| [`10-kopieren.md`](10-kopieren.md) | #10 | umgesetzt |
+| [`10-kopieren.md`](10-kopieren.md) | #10 | umgesetzt, auf dem Android-Emulator nachgeprüft |
+| [`19-texte-kopierbar.md`](19-texte-kopierbar.md) | #19 | in Arbeit |
 
 ## Vorlage
 

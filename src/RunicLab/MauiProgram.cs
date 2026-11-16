@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using RunicLab.Views;
 
 namespace RunicLab
 {
@@ -18,6 +19,9 @@ namespace RunicLab
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
+
+            // Texte aller Seiten markierbar machen (Issue #19).
+            TextAuswahl.Aktivieren();
 
             return builder.Build();
         }
