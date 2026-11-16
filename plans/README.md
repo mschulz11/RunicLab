@@ -13,7 +13,7 @@ Offene Aufgaben gehören in GitHub-Issues.
 | [`10-kopieren.md`](10-kopieren.md) | #10 | umgesetzt, auf dem Android-Emulator nachgeprüft |
 | [`19-texte-kopierbar.md`](19-texte-kopierbar.md) | #19 | umgesetzt (PR #22) |
 | [`23-neu-berechnen.md`](23-neu-berechnen.md) | #23 | umgesetzt (PR #24) |
-| [`21-vergleichsanalyse.md`](21-vergleichsanalyse.md) | #21 | in Arbeit |
+| [`21-vergleichsanalyse.md`](21-vergleichsanalyse.md) | #21 | umgesetzt (PR #26) |
 
 ## Vorlage
 
