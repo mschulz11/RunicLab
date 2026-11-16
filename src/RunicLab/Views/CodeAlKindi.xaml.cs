@@ -8,8 +8,6 @@ namespace RunicLab.Views;
 /// </summary>
 public partial class CodeAlKindi : CipherPageBase
 {
-    private string? _letzteEingabe;
-
     public CodeAlKindi()
     {
         InitializeComponent();
@@ -22,11 +20,10 @@ public partial class CodeAlKindi : CipherPageBase
 
     protected override void EinstellungenAnwenden()
     {
-        // Nach einem Besuch der Einstellungen die Auswertung mit den neuen
-        // Werten erneut aufbauen, statt sie zu verwerfen.
-        if (_letzteEingabe is not null)
+        // Nach einer Einstellungsänderung rechnet die Basis die Auswertung gleich
+        // neu; vorher nur der Hinweis für den leeren Zustand.
+        if (WurdeBerechnet)
         {
-            Analysiere(_letzteEingabe);
             return;
         }
 
@@ -34,11 +31,10 @@ public partial class CodeAlKindi : CipherPageBase
         lbZusammenfassung.Text = $"Noch keine Analyse · Sprache: {Sprachname(sprache)}";
     }
 
-    protected override void AktionAusfuehren()
-    {
-        _letzteEingabe = Eingabe.EingabeText;
-        Analysiere(_letzteEingabe);
-    }
+    protected override void AktionAusfuehren() => Analysiere(Eingabe.EingabeText);
+
+    protected override string EinstellungsMerkmale() =>
+        $"{AlKindiPreferences.LoadSprache()}|{AlKindiPreferences.LoadZeigeErwartung()}|{AlKindiPreferences.LoadTopAnzahl()}";
 
     protected override Page EinstellungsSeiteErzeugen() => new SettingsAlKindi();
 

@@ -38,5 +38,7 @@ public partial class CodeCaeserVerfahren : CipherPageBase
     protected override void AktionAusfuehren()
         => Eingabe.AusgabeText = CaeserCipher.Shift(Eingabe.EingabeText, Verschiebung, Modus);
 
+    protected override string EinstellungsMerkmale() => $"{Verschiebung}|{Modus}";
+
     protected override Page EinstellungsSeiteErzeugen() => new SettingsCaeser(_settings);
 }
