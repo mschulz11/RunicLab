@@ -24,13 +24,13 @@
                    Text="Funktionsweise"
                    SemanticProperties.HeadingLevel="Level2" />
 
-            <Label Text="Die App zählt alle Buchstaben des eingegebenen Textes und zeigt die häufigsten mit Balken und Prozentanteil. Besteht die Eingabe aus Zahlenpaaren (Polybius), zählt sie die Buchstaben des entschlüsselten Textes – aus „15“ wird so ein E. Anschließend vergleicht der Verfahrensvergleich die Verteilung mit der typischen Verteilung der gewählten Sprache (Chi-Quadrat) und entschlüsselt den Geheimtext mit dem Verfahren, das am besten passt. Für kurze Texte ist das unzuverlässig: Erst ab etwa 20 Buchstaben wird verglichen." />
+            <Label Text="Die App zählt alle Buchstaben des eingegebenen Textes und zeigt die häufigsten mit Balken und Prozentanteil. Besteht die Eingabe aus Zahlenpaaren (Polybius), zählt sie stattdessen die Paare selbst: In einem deutschen Text kommt das E am häufigsten vor, also ist auch das Koordinatenpaar am häufigsten, das für das E steht. Aus dieser Reihenfolge baut die App ein eigenes Gitter – das häufigste Paar bekommt das E, das zweithäufigste das N und so weiter. Felder, deren Paar zu selten vorkommt, bleiben offen und stehen im entschlüsselten Text als „?“. Diese Zuordnung ist eine begründete Vermutung, keine Gewissheit: Häufige Buchstaben trifft sie meist, seltene fast nie. Ein in den Einstellungen hinterlegtes Lösungswort wird dafür nicht benutzt. Für kurze Texte ist das unzuverlässig: Erst ab etwa 20 Buchstaben oder Koordinatenpaaren wird gerechnet." />
 
             <Label Style="{StaticResource SubHeadline}"
                    Text="Verfahrensvergleich"
                    SemanticProperties.HeadingLevel="Level2" />
 
-            <Label Text="Man muss nicht wissen, womit verschlüsselt wurde: Der Vergleich probiert alle Verfahren der App blind durch – unveränderten Text, alle 26 Cäsar-Verschiebungen und, wenn die Eingabe aus Zahlenpaaren besteht, das Polybius-Quadrat (mit Standardgitter und mit dem eingestellten Schlüsselwort). Jeder entstehende Text wird mit der typischen Buchstabenverteilung verglichen (Chi-Quadrat, kleiner ist besser) und die Kandidaten werden sortiert. Bei einem Polybius-Text mit fremdem Schlüsselwort kann der Vergleich das Gitter nicht erraten – dann bleibt nur der Hinweis, dass es Koordinaten sind." />
+            <Label Text="Man muss nicht wissen, womit verschlüsselt wurde: Der Vergleich probiert alle Verfahren der App blind durch – unveränderten Text, alle 26 Cäsar-Verschlüsselungen und, wenn die Eingabe aus Zahlenpaaren besteht, das Polybius-Quadrat (mit Standardgitter und mit dem eingestellten Schlüsselwort). Jeder entstehende Text wird mit der typischen Buchstabenverteilung verglichen (Chi-Quadrat, kleiner ist besser) und die Kandidaten werden sortiert. Bei einem Polybius-Text mit fremdem Schlüsselwort kann der Vergleich das Gitter nicht erraten – dann bleibt nur der Hinweis, dass es Koordinaten sind. Deshalb arbeitet die Häufigkeitsanalyse oben unabhängig davon: Sie baut ihr Gitter allein aus den gezählten Paaren." />
 
             <!-- Eingabe und Aktions-Button: gemeinsamer Block aller Verfahren.
                  Die Auswertung hat keinen einfachen Ausgabetext, daher wird der
@@ -54,7 +54,7 @@
                 </VerticalStackLayout>
             </Border>
 
-            <!-- Gitter nur zeigen, wenn aus Zahlenpaaren entschlüsselt wurde (#21) -->
+            <!-- Gitter nur zeigen, wenn aus Zahlenpaaren ein Gitter erschlossen wurde (#32) -->
             <Border x:Name="GitterKarte"
                     Stroke="Gray"
                     StrokeThickness="1"
@@ -62,7 +62,7 @@
                     Padding="12"
                     IsVisible="False">
                 <VerticalStackLayout Spacing="10">
-                    <Label Text="Verwendetes Gitter"
+                    <Label Text="Aus der Häufigkeit erschlossenes Gitter"
                            FontAttributes="Bold"
                            FontSize="16" />
 
@@ -74,6 +74,15 @@
                     <Grid x:Name="GitterRaster"
                           ColumnSpacing="6"
                           RowSpacing="6" />
+
+                    <Label Text="So liest sich der Text mit dieser Zuordnung („?“ = offen)"
+                           FontAttributes="Bold"
+                           FontSize="14" />
+
+                    <Label x:Name="lbHypotheseText"
+                           FontSize="14"
+                           LineBreakMode="WordWrap"
+                           Text="" />
                 </VerticalStackLayout>
             </Border>
 

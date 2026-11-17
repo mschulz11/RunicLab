@@ -43,50 +43,60 @@ public partial class CodeAlKindi : CipherPageBase
         var language = AlKindiPreferences.LoadSprache();
         var befunde = CipherVergleich.Analysiere(text, language, PolybiusPreferences.Load(), EnigmaPreferences.Load());
 
-        var frequencies = FrequencyAnalysis.Analyze(text);
+        // Besteht die Eingabe aus Zahlenpaaren, wird das Gitter aus der Häufigkeit
+        // der Paare erschlossen (#32). Die Einstellungen des Polybius-Quadrats
+        // spielen dabei bewusst keine Rolle.
+        var hypothese = PolybiusHaeufigkeitsanalyse.Analysiere(text, language);
+
+        // Gezählt wird der entschlüsselte Text; offene Felder stehen dort als „?“
+        // und zählen nicht als Buchstabe.
+        var frequencies = FrequencyAnalysis.Analyze(hypothese?.Klartext ?? text);
         int total = frequencies.Sum(f => f.Count);
 
-        // Zahlenpaare (Polybius) enthalten keine Buchstaben. Dann zählt die
-        // Häufigkeit des entschlüsselten Textes – Grundlage ist der beste
-        // Kandidat der Vergleichsanalyse (z. B. „15“ → E).
-        bool ausKoordinaten = total == 0 && befunde.Count > 0;
-        if (ausKoordinaten)
-        {
-            frequencies = FrequencyAnalysis.Analyze(befunde[0].Klartext);
-            total = frequencies.Sum(f => f.Count);
-        }
+        lbZusammenfassung.Text = Zusammenfassung(hypothese, total, language);
 
-        lbZusammenfassung.Text = total == 0
-            ? "Keine Buchstaben gefunden – bitte einen Text eingeben."
-            : ausKoordinaten
-                ? $"{total} Buchstaben gezählt · entschlüsselt als {befunde[0].Verfahren} ({befunde[0].Details}) · Sprache: {Sprachname(language)}"
-                : $"{total} Buchstaben gezählt · Sprache: {Sprachname(language)}";
-
-        ZeigeGitter(text, ausKoordinaten ? befunde[0] : null);
+        ZeigeGitter(hypothese);
         BuildResultGrid(frequencies, total, language);
         UpdateVergleich(befunde);
     }
 
-    /// <summary>
-    /// Gitter zeigen, mit dem ein Koordinatentext entschlüsselt wurde – samt der
-    /// häufigsten Paare („15 = E“), damit die Häufigkeitsanalyse nachvollziehbar ist.
-    /// </summary>
-    private void ZeigeGitter(string? text, Verfahrensbefund? befund)
+    private static string Zusammenfassung(PolybiusHypothese? hypothese, int total, FrequencyLanguage language)
     {
-        if (befund?.Gitter is not { } gitter)
+        if (hypothese is not null)
+        {
+            return $"{hypothese.GezaehltePaare} Koordinaten · {hypothese.BelegteFelder} von 25 Feldern belegt · "
+                + $"{total} Buchstaben entschlüsselt · Sprache: {Sprachname(language)}";
+        }
+
+        return total == 0
+            ? "Keine Buchstaben gefunden – bitte einen Text eingeben (oder Zahlenpaare wie „15 24 31“)."
+            : $"{total} Buchstaben gezählt · Sprache: {Sprachname(language)}";
+    }
+
+    /// <summary>
+    /// Das aus der Häufigkeit erschlossene Gitter zeigen – samt der häufigsten
+    /// Paare („15 = E“), damit die Zuordnung nachvollziehbar ist.
+    /// </summary>
+    private void ZeigeGitter(PolybiusHypothese? hypothese)
+    {
+        if (hypothese is null)
         {
             GitterKarte.IsVisible = false;
             return;
         }
 
         GitterKarte.IsVisible = true;
-        PolybiusGridBuilder.Fill(GitterRaster, gitter);
+        PolybiusGridBuilder.FillHypothese(GitterRaster, hypothese);
 
-        var paare = PolybiusCipher.HaeufigstePaare(text, gitter, 3);
-        lbGitterHinweis.Text = paare.Count == 0
-            ? "Zeile/Spalte im Gitter."
-            : "So wurde entschlüsselt (Zeile/Spalte): "
-              + string.Join(", ", paare.Select(p => $"{p.Paar} = {p.Buchstabe} ({p.Anzahl}×)"));
+        var top = hypothese.Haeufigste(3);
+        string zuordnung = string.Join(
+            ", ",
+            top.Select(f => $"{f.Paar} = {f.Buchstabe ?? PolybiusCipher.UngueltigesPaar} ({f.Anzahl}×)"));
+
+        lbGitterHinweis.Text = $"{hypothese.BelegteFelder} von 25 Feldern belegt · {zuordnung} · "
+            + "offene Felder stehen für zu seltene Paare und bleiben im Text ein „?“.";
+
+        lbHypotheseText.Text = hypothese.Klartext;
     }
 
     /// <summary>

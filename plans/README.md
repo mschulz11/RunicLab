@@ -15,6 +15,7 @@ Offene Aufgaben gehören in GitHub-Issues.
 | [`23-neu-berechnen.md`](23-neu-berechnen.md) | #23 | umgesetzt (PR #24) |
 | [`21-vergleichsanalyse.md`](21-vergleichsanalyse.md) | #21 | umgesetzt (PR #26) |
 | [`31-enigma.md`](31-enigma.md) | #31 | umgesetzt (PR #34) |
+| [`32-haeufigkeitsanalyse.md`](32-haeufigkeitsanalyse.md) | #32 | in Arbeit |
 
 ## Vorlage
 

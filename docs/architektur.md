@@ -69,7 +69,7 @@ plattformspezifische Clipboard-Implementierung.
 | Cäser | `Models/CaeserCipher.cs` | `Views/CodeCaeserVerfahren.xaml` | `Views/SettingsCaeser.xaml` |
 | Polybius-Quadrat | `Models/PolybiusCipher.cs` | `Views/CodePolybius.xaml` | `Views/SettingsPolybius.xaml`, `Views/PolybiusGridBuilder.cs` |
 | Enigma | `Models/EnigmaCipher.cs` | `Views/CodeEnigma.xaml`, `Views/EnigmaWalzenlauf.xaml` | `Views/SettingsEnigma.xaml` |
-| Häufigkeitsanalyse | `Models/FrequencyAnalysis.cs` | `Views/CodeAlKindi.xaml` | `Views/SettingsAlKindi.xaml` |
+| Häufigkeitsanalyse | `Models/FrequencyAnalysis.cs`, `Models/PolybiusHaeufigkeitsanalyse.cs` | `Views/CodeAlKindi.xaml` | `Views/SettingsAlKindi.xaml` |
 
 Jedes Verfahren hat ein „Code“-Fenster (Ein-/Ausgabe) und eine Einstellungsseite.
 Neue Verfahren folgen derselben Aufteilung und werden von einer gemeinsamen Basis
@@ -82,12 +82,16 @@ die Enigma mit den aktuell eingestellten Walzen) und
 bewertet jeden entstehenden Klartext mit `FrequencyAnalysis.ChiQuadrat`. Kleiner
 Wert = besser; die Kandidaten stehen sortiert in `CodeAlKindi`. Ein neues
 Verfahren gehört bei Bedarf in `CipherVergleich.Analysiere` dazu, damit es im
-Vergleich mitspielt. Besteht die Eingabe aus Polybius-Zahlenpaaren, zählt die
-Buchstabenhäufigkeit den Klartext des besten Kandidaten (aus „15“ wird E), weil
-Ziffern selbst keine Buchstaben sind. Darunter zeigt die Karte „Verwendetes
-Gitter“ das Gitter dieses Kandidaten (`PolybiusGridBuilder`) und die häufigsten
-Paare (`PolybiusCipher.HaeufigstePaare`), damit die Entschlüsselung
-nachvollziehbar bleibt.
+Vergleich mitspielt. Besteht die Eingabe aus Polybius-Zahlenpaaren, erschließt
+`Models/PolybiusHaeufigkeitsanalyse.cs` das Gitter selbst (#32): Es zählt die
+Paare, sortiert sie nach Häufigkeit und ordnet sie der Reihe nach den häufigsten
+Buchstaben der Sprache zu (E, N, I, S, R …; I steht dabei auch für J). Felder
+mit weniger als drei Vorkommen oder unter einem Prozent Anteil bleiben offen und
+erscheinen im Klartext als „?“. Die Buchstabenhäufigkeit zählt diesen
+entschlüsselten Text, die Karte „Aus der Häufigkeit erschlossenes Gitter“ zeigt
+je Feld Buchstabe, Paar und Anzahl (`PolybiusGridBuilder.FillHypothese`). Die
+Einstellungen des Polybius-Quadrats fließen dabei bewusst nicht ein; der
+Vergleichskandidat mit Schlüsselwort bleibt davon unberührt.
 
 ## Tests
 
