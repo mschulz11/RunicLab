@@ -1,8 +1,8 @@
 # Architektur
 
 RunicLab ist eine .NET-MAUI-App (net10.0) für Android und Windows. Sie zeigt
-klassische Verschlüsselungsverfahren zum Lernen: Cäser, Polybius-Quadrat und
-Häufigkeitsanalyse nach Al-Kindi. Es gibt keinen Server, keine Datenbank und
+klassische Verschlüsselungsverfahren zum Lernen: Cäser, Polybius-Quadrat,
+Enigma und Häufigkeitsanalyse nach Al-Kindi. Es gibt keinen Server, keine Datenbank und
 keine Netzwerkschnittstelle – aller Zustand lebt lokal auf dem Gerät.
 
 ## Repository-Aufbau
@@ -35,7 +35,8 @@ repo-relativ, damit weder IDE noch CLI vom Arbeitsverzeichnis abhängen.
 Die Trennung ist bewusst schmal: Es gibt kein ViewModel-Projekt, weil die Seiten
 wenig Zustand haben. Der Zustand wird über `Preferences`-Klassen gekapselt
 (`Caeser`-Einstellungen über `AppSettings` + `SettingsCaeser`, `PolybiusPreferences`,
-`AlKindiPreferences`), damit die Logik testbar bleibt und die XAML-Dateien dünn sind.
+`EnigmaPreferences`, `AlKindiPreferences`), damit die Logik testbar bleibt und die
+XAML-Dateien dünn sind.
 
 ### Seiten-Basis für Verfahren
 
@@ -67,6 +68,7 @@ plattformspezifische Clipboard-Implementierung.
 | --- | --- | --- | --- |
 | Cäser | `Models/CaeserCipher.cs` | `Views/CodeCaeserVerfahren.xaml` | `Views/SettingsCaeser.xaml` |
 | Polybius-Quadrat | `Models/PolybiusCipher.cs` | `Views/CodePolybius.xaml` | `Views/SettingsPolybius.xaml`, `Views/PolybiusGridBuilder.cs` |
+| Enigma | `Models/EnigmaCipher.cs` | `Views/CodeEnigma.xaml`, `Views/EnigmaWalzenlauf.xaml` | `Views/SettingsEnigma.xaml` |
 | Häufigkeitsanalyse | `Models/FrequencyAnalysis.cs` | `Views/CodeAlKindi.xaml` | `Views/SettingsAlKindi.xaml` |
 
 Jedes Verfahren hat ein „Code“-Fenster (Ein-/Ausgabe) und eine Einstellungsseite.
@@ -75,7 +77,8 @@ abgeleitet (Issue #11) statt kopiert.
 
 **Vergleichsanalyse:** `Models/CipherVergleich.cs` probiert alle Verfahren blind
 durch (unveränderter Text, beste Cäsar-Verschiebung, Polybius bei
-Koordinaten-Eingabe – mit Standardgitter und konfiguriertem Schlüsselwort) und
+Koordinaten-Eingabe – mit Standardgitter und konfiguriertem Schlüsselwort – sowie
+die Enigma mit den aktuell eingestellten Walzen) und
 bewertet jeden entstehenden Klartext mit `FrequencyAnalysis.ChiQuadrat`. Kleiner
 Wert = besser; die Kandidaten stehen sortiert in `CodeAlKindi`. Ein neues
 Verfahren gehört bei Bedarf in `CipherVergleich.Analysiere` dazu, damit es im

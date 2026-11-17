@@ -20,6 +20,10 @@
         ContentTemplate="{DataTemplate local:CodePolybius}"
         Route="CodePolybius" />
     <ShellContent
+        Title="Enigma"
+        ContentTemplate="{DataTemplate local:CodeEnigma}"
+        Route="CodeEnigma" />
+    <ShellContent
         Title="Häufigkeitsanalyse"
         ContentTemplate="{DataTemplate local:CodeAlKindi}"
         Route="CodeAlKindi" />

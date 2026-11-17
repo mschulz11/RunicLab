@@ -37,13 +37,19 @@
                 HorizontalOptions="Fill" />
 
             <Button
+                x:Name="btnEnigma"
+                Text="Enigma"
+                Clicked="OnEnigmaClicked"
+                HorizontalOptions="Fill" />
+
+            <Button
                 x:Name="btnAlKindi"
                 Text="Häufigkeitsanalyse (Al-Kindi)"
                 Clicked="OnAlKindiClicked"
                 HorizontalOptions="Fill" />
 
             <Label
-                Text="Zwei klassische Verfahren aus der Geschichte der Kryptografie – zum Ausprobieren und Vergleichen."
+                Text="Klassische Verfahren aus der Geschichte der Kryptografie – zum Ausprobieren und Vergleichen."
                 FontSize="12"
                 TextColor="Gray"
                 HorizontalTextAlignment="Center" />

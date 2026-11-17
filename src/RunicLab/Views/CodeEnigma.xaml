@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:CipherPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      xmlns:views="clr-namespace:RunicLab.Views"
+                      x:Class="RunicLab.Views.CodeEnigma"
+                      Title="Enigma">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="20">
+
+            <Label
+                Style="{StaticResource SubHeadline}"
+                Text="Die Enigma"
+                SemanticProperties.HeadingLevel="Level1" />
+
+            <Label Text="Die Enigma ist die bekannteste Chiffriermaschine des Zweiten Weltkriegs. Drei Walzen mit unterschiedlicher innerer Verdrahtung drehen sich bei jedem Buchstaben weiter, eine Umkehrwalze schickt das Signal zurück durch die Walzen, und ein Steckerbrett vertauscht zusätzlich Buchstabenpaare. Dadurch entsteht nach jedem Tastendruck eine andere Verschlüsselung – anders als beim Cäser-Verfahren." />
+
+            <Label
+                Style="{StaticResource SubHeadline}"
+                Text="Warum der Walzenlauf zählt"
+                SemanticProperties.HeadingLevel="Level2" />
+
+            <Label Text="Die rechte Walze dreht sich bei jedem Buchstaben. Steht sie in ihrer Kerbenstellung, nimmt sie die mittlere Walze einen Schritt mit; steht die mittlere selbst in der Kerbe, rücken mittlere und linke Walze gleichzeitig vor – der berühmte Doppelschritt. Weil die Umkehrwalze jeden Buchstaben zurück durch dieselben Walzen schickt, kann sich ein Buchstabe außerdem niemals selbst verschlüsseln. Genau das hat den britischen Codebrechern geholfen, die Maschine zu knacken." />
+
+            <Label Text="Walzenlage, Ringstellung, Grundstellung und Steckerbrett lassen sich in den Einstellungen ändern. Zum Nachvollziehen zeigt der Knopf „Walzenlauf anzeigen“ jeden Schritt: welcher Buchstabe nach dem Steckerbrett in die Walzen geht, wie das Walzenfenster danach steht und was herauskommt." />
+
+            <!-- Eingabe, Aktions-Button und Ergebnis: gemeinsamer Block aller Verfahren -->
+            <views:CipherEingabe x:Name="CipherEingabeControl" />
+
+            <Button x:Name="btnWalzenlauf"
+                    Text="Walzenlauf anzeigen"
+                    Clicked="OnWalzenlaufClicked"
+                    IsEnabled="False"
+                    HorizontalOptions="Fill" />
+
+            <Label x:Name="lbHinweis"
+                   FontSize="12"
+                   TextColor="Gray"
+                   IsVisible="False"
+                   HorizontalTextAlignment="Center"
+                   Text="" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</views:CipherPageBase>

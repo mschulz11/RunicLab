@@ -41,7 +41,7 @@ public partial class CodeAlKindi : CipherPageBase
     private void Analysiere(string? text)
     {
         var language = AlKindiPreferences.LoadSprache();
-        var befunde = CipherVergleich.Analysiere(text, language, PolybiusPreferences.Load());
+        var befunde = CipherVergleich.Analysiere(text, language, PolybiusPreferences.Load(), EnigmaPreferences.Load());
 
         var frequencies = FrequencyAnalysis.Analyze(text);
         int total = frequencies.Sum(f => f.Count);

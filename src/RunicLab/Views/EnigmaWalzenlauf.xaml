@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:RunicLab.Models"
+             x:Class="RunicLab.Views.EnigmaWalzenlauf"
+             Title="Walzenlauf">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Schließen"
+                     IconImageSource="playbutton2.png"
+                     Order="Primary"
+                     Priority="0"
+                     Clicked="OnCloseClicked" />
+    </ContentPage.ToolbarItems>
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto"
+          Padding="16,12"
+          RowSpacing="8">
+
+        <Label x:Name="lbKopf"
+               Grid.Row="0"
+               FontSize="12"
+               TextColor="Gray"
+               Text="" />
+
+        <Grid Grid.Row="1"
+              ColumnDefinitions="34,*,*,*,*"
+              ColumnSpacing="6">
+            <Label Grid.Column="0" FontSize="12" FontAttributes="Bold" Text="#" />
+            <Label Grid.Column="1" FontSize="12" FontAttributes="Bold" Text="Eingabe" />
+            <Label Grid.Column="2" FontSize="12" FontAttributes="Bold" Text="nach Stecker" />
+            <Label Grid.Column="3" FontSize="12" FontAttributes="Bold" Text="Walzenfenster" />
+            <Label Grid.Column="4" FontSize="12" FontAttributes="Bold" Text="Ausgabe" />
+        </Grid>
+
+        <BoxView Grid.Row="2"
+                 HeightRequest="1"
+                 Color="Gray"
+                 Opacity="0.3"
+                 VerticalOptions="Start" />
+
+        <CollectionView Grid.Row="2"
+                        x:Name="Liste"
+                        Margin="0,6,0,0">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:EnigmaSchritt">
+                    <Grid ColumnDefinitions="34,*,*,*,*"
+                          ColumnSpacing="6"
+                          Padding="0,3">
+                        <Label Grid.Column="0" FontSize="13" TextColor="Gray" Text="{Binding Nummer}" />
+                        <Label Grid.Column="1" FontSize="13" TextColor="Gray" Text="{Binding Eingabe}" />
+                        <Label Grid.Column="2" FontSize="16" Text="{Binding NachStecker}" />
+                        <Label Grid.Column="3" FontSize="16" FontAttributes="Bold" Text="{Binding Walzenlage}" />
+                        <Label Grid.Column="4" FontSize="16" Text="{Binding Ausgabe}" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Label x:Name="lbFuss"
+               Grid.Row="3"
+               FontSize="12"
+               TextColor="Gray"
+               Text="" />
+
+    </Grid>
+
+</ContentPage>

@@ -21,9 +21,10 @@ public sealed record Verfahrensbefund(
 /// danach, wie gut der jeweils entstehende Text zur Buchstabenverteilung der
 /// gewählten Sprache passt (Chi-Quadrat, kleiner ist besser).
 ///
-/// Verglichen werden: unveränderter Text, alle 26 Cäsar-Verschiebungen und – wenn
-/// die Eingabe wie Koordinatenpaare aussieht – das Polybius-Quadrat (mit dem
-/// Standardgitter und, falls gesetzt, mit dem konfigurierten Schlüsselwort).
+/// Verglichen werden: unveränderter Text, alle 26 Cäsar-Verschlüsselungen, das
+/// Polybius-Quadrat (wenn die Eingabe wie Koordinatenpaare aussieht) und die
+/// Enigma mit den aktuell eingestellten Walzen. Eine Schlüsselsuche für die
+/// Enigma findet nicht statt – der Schlüsselraum ist dafür zu groß.
 /// Reine Logik ohne MAUI-Abhängigkeiten, damit sie testbar bleibt.
 /// </summary>
 public static class CipherVergleich
@@ -31,6 +32,7 @@ public static class CipherVergleich
     public const string Unverschluesselt = "Unverschlüsselt";
     public const string Caeser = "Cäsar";
     public const string Polybius = "Polybius-Quadrat";
+    public const string Enigma = "Enigma";
 
     /// <summary>
     /// Alle Verfahren durchprobieren, bestes Ergebnis zuerst.
@@ -39,7 +41,8 @@ public static class CipherVergleich
     public static IReadOnlyList<Verfahrensbefund> Analysiere(
         string? text,
         FrequencyLanguage language = FrequencyLanguage.Deutsch,
-        PolybiusOptions? polybius = null)
+        PolybiusOptions? polybius = null,
+        EnigmaOptions? enigma = null)
     {
         var befunde = new List<Verfahrensbefund>();
 
@@ -82,6 +85,23 @@ public static class CipherVergleich
             }
         }
 
+        // 4. Enigma: nur ein Kandidat, nämlich mit den aktuell eingestellten
+        //    Walzen. Den Schlüsselraum (Walzenlage × Ring × Grundstellung ×
+        //    Stecker) durchzuprobieren ist keine Option – dafür ist er zu groß.
+        if (enigma is not null && EnigmaCipher.Pruefe(enigma) is null)
+        {
+            string stecker = string.IsNullOrWhiteSpace(enigma.Steckerbrett)
+                ? "ohne Stecker"
+                : $"Stecker {enigma.Steckerbrett.Trim()}";
+
+            Add(befunde, Enigma,
+                $"Walzen {EnigmaCipher.WalzenlageText(enigma.Walzenlage)}, "
+                + $"UKW {enigma.Umkehrwalze}, "
+                + $"Ring {EnigmaCipher.StellungenText(enigma.Ringstellung)}, "
+                + $"Grund {EnigmaCipher.Anzeige(enigma.Grundstellung)}, {stecker}",
+                EnigmaCipher.Decrypt(text, enigma), language);
+        }
+
         return befunde
             .OrderBy(b => b.Guetewert)
             .ThenBy(b => b.Verfahren)
@@ -92,8 +112,9 @@ public static class CipherVergleich
     public static Verfahrensbefund? Bestes(
         string? text,
         FrequencyLanguage language = FrequencyLanguage.Deutsch,
-        PolybiusOptions? polybius = null) =>
-        Analysiere(text, language, polybius).FirstOrDefault();
+        PolybiusOptions? polybius = null,
+        EnigmaOptions? enigma = null) =>
+        Analysiere(text, language, polybius, enigma).FirstOrDefault();
 
     /// <summary>
     /// Sieht der Text nach Polybius-Koordinaten aus? Mindestens so viele Ziffern

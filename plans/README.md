@@ -14,6 +14,7 @@ Offene Aufgaben gehören in GitHub-Issues.
 | [`19-texte-kopierbar.md`](19-texte-kopierbar.md) | #19 | umgesetzt (PR #22) |
 | [`23-neu-berechnen.md`](23-neu-berechnen.md) | #23 | umgesetzt (PR #24) |
 | [`21-vergleichsanalyse.md`](21-vergleichsanalyse.md) | #21 | umgesetzt (PR #26) |
+| [`31-enigma.md`](31-enigma.md) | #31 | in Arbeit |
 
 ## Vorlage
 
