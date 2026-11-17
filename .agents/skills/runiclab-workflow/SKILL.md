@@ -127,6 +127,27 @@ gh pr merge <nr> --squash --delete-branch
    rebasen, sonst entstehen Konflikte im Squash-Merge.
 5. **Bildschirmfotos zur Verifikation.** Teuer und unpräzise; Text-Dump plus
    menschlicher Blick auf die Optik ist die Abmachung.
+6. **Relative Shell-Navigation.** `GoToAsync(nameof(Seite))` scheitert bei einer
+   Seite, die als `ShellContent` in `AppShell.xaml` steht, mit „Relative routing to
+   shell elements is currently not supported“. Immer `GoToAsync($"//{nameof(Seite)}")`
+   verwenden – so machen es alle vier Startseiten-Buttons.
+7. **Eingabefelder bei jedem `TextChanged` speichern.** Beim Tippen entstehen
+   Zwischenstände („A“, „AB “), die einen vorher gültigen Wert überschreiben. Erst
+   im Speicher übernehmen, gespeichert wird bei `Unfocused` und `OnDisappearing`.
+8. **Enigma-Kerbe am Walzenkern prüfen.** Die Kerbe sitzt am Alphabetring, also an
+   der Anzeige: Weitergeschaltet wird bei `(Anzeigestellung == Kerbe)`, unabhängig
+   von der Ringstellung. Die Ringstellung verschiebt nur den Verschlüsselungsweg.
+   Referenzwerte mit `uv run --with py-enigma` erzeugen (UKW A fehlt dort;
+   Leerzeichen werden zu X, deshalb nur A–Z als Eingabe verwenden).
+
+## Referenzwerte für Chiffren
+
+Erwartungswerte nie aus der eigenen Implementierung einfrieren. Für Enigma:
+`uv run --python 3.12 --with py-enigma python` aufrufen (native Pfade, `$TMPDIR`
+ist unter Git-Bash `/tmp`), `EnigmaMachine.from_key_sheet(rotors='I II III',
+reflector='B', ring_settings='A A A', plugboard_settings='AB CD')`, dann
+`set_display('AAA')` und `process_text(...)`. Die Einstellungen im Test
+dokumentieren, damit der Vektor nachvollziehbar bleibt.
 
 ## Verification Checklist
 
