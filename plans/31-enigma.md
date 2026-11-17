@@ -23,11 +23,11 @@
 
 ## Verifikation
 
-- [ ] `dotnet build src/RunicLab/RunicLab.csproj -f net10.0-windows10.0.19041.0`
-- [ ] `./scripts/test.sh`
-- [ ] `dotnet format RunicLab.slnx --verify-no-changes` (nur eigene Dateien müssen sauber sein)
-- [ ] Android-Emulator: Debug-Build (x86_64) installiert, Funktionales per `uiautomator`-Dump
-- [ ] Testrezept für die optische Prüfung durch den Nutzer
+- [x] `dotnet build src/RunicLab/RunicLab.csproj -f net10.0-windows10.0.19041.0`
+- [x] `./scripts/test.sh`
+- [x] `dotnet format RunicLab.slnx --verify-no-changes` (nur eigene Dateien müssen sauber sein)
+- [x] Android-Emulator: Debug-Build (x86_64) installiert, Funktionales per `uiautomator`-Dump
+- [x] Testrezept für die optische Prüfung durch den Nutzer
 
 ## Risiken
 
