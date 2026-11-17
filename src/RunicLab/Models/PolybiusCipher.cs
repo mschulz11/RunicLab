@@ -119,28 +119,7 @@ public static class PolybiusCipher
     }
 
     /// <summary>Ä/Ö/Ü/ß umschreiben, alles andere unverändert lassen.</summary>
-    public static string Transliterate(string? text)
-    {
-        if (string.IsNullOrEmpty(text))
-        {
-            return string.Empty;
-        }
-
-        var sb = new StringBuilder(text.Length);
-        foreach (char c in text)
-        {
-            switch (c)
-            {
-                case 'Ä' or 'ä': sb.Append("AE"); break;
-                case 'Ö' or 'ö': sb.Append("OE"); break;
-                case 'Ü' or 'ü': sb.Append("UE"); break;
-                case 'ß' or 'ẞ': sb.Append("SS"); break;
-                default: sb.Append(c); break;
-            }
-        }
-
-        return sb.ToString();
-    }
+    public static string Transliterate(string? text) => TextNormalisierung.UmlauteUmschreiben(text);
 
     /// <summary>
     /// Verschlüsselt Text in Koordinatenpaare. Wortgrenzen im Original werden als

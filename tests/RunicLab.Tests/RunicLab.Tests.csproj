@@ -12,6 +12,8 @@
     <Compile Include="..\..\src\RunicLab\Models\CaeserCipher.cs" Link="Models\CaeserCipher.cs" />
     <Compile Include="..\..\src\RunicLab\Models\PolybiusCipher.cs" Link="Models\PolybiusCipher.cs" />
     <Compile Include="..\..\src\RunicLab\Models\FrequencyAnalysis.cs" Link="Models\FrequencyAnalysis.cs" />
+    <Compile Include="..\..\src\RunicLab\Models\TextNormalisierung.cs" Link="Models\TextNormalisierung.cs" />
+    <Compile Include="..\..\src\RunicLab\Models\EnigmaCipher.cs" Link="Models\EnigmaCipher.cs" />
     <Compile Include="..\..\src\RunicLab\Models\CipherVergleich.cs" Link="Models\CipherVergleich.cs" />
   </ItemGroup>
 

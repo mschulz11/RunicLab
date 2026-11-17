@@ -10,8 +10,9 @@
 
 - **Cäser-Verfahren** – Text verschlüsseln und entschlüsseln durch Verschieben des Alphabets
 - **Polybius-Quadrat** – Buchstaben als Zahlenpaare aus einem 5×5-Gitter, mit optionalem Schlüsselwort und wählbarem Trennzeichen
+- **Enigma** – die Chiffriermaschine mit drei Walzen, Umkehrwalze, Ring- und Grundstellung sowie Steckerbrett; der Walzenlauf lässt sich Buchstabe für Buchstabe anzeigen (inklusive Doppelschritt)
 - **Häufigkeitsanalyse (Al-Kindi)** – zählt Buchstaben, zeigt Balken und Prozentanteile; bei Polybius-Zahlenpaaren die Häufigkeit des entschlüsselten Textes
-- **Verfahrensvergleich** – probiert alle Verfahren blind durch (unverändert, alle Cäsar-Verschiebungen, Polybius) und zeigt die besten Kandidaten samt Klartext und Bewertung
+- **Verfahrensvergleich** – probiert alle Verfahren blind durch (unverändert, alle Cäsar-Verschlüsselungen, Polybius, Enigma mit den eingestellten Walzen) und zeigt die besten Kandidaten samt Klartext und Bewertung
 - **Texte kopierbar** – alle Erklär- und Ergebnistexte lassen sich markieren und kopieren: auf Android per langem Drücken, auf Windows mit der Maus
 - **Flexible Einstellungen** – Verschiebung per Eingabefeld, Stepper oder Slider wählen (0–26), Modus (Ver-/Entschlüsseln) per RadioButton umschalten
 - **Beispiel-Alphabet** – zeigt live, wie jeder Buchstabe bei der aktuellen Einstellung verschoben wird

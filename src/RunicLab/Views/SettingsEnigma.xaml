@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RunicLab.Views.SettingsEnigma"
+             Title="Einstellungen Enigma"
+             NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Schließen"
+                     IconImageSource="playbutton2.png"
+                     Order="Primary"
+                     Priority="0"
+                     Clicked="OnCloseClicked" />
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16,12" Spacing="12">
+
+            <Label x:Name="lbHinweis"
+                   FontSize="13"
+                   TextColor="#C0392B"
+                   IsVisible="False"
+                   Text="" />
+
+            <!-- Karte 1: Walzen -->
+            <Border BackgroundColor="Transparent"
+                    Stroke="Gray"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 8"
+                    Padding="16,12">
+                <VerticalStackLayout Spacing="12">
+
+                    <Label FontSize="18"
+                           FontAttributes="Bold"
+                           Text="Walzen" />
+
+                    <Label FontSize="12"
+                           TextColor="Gray"
+                           Text="Drei Walzen aus den fünf verfügbaren (I–V). Jede Walze darf nur einmal vorkommen. Die rechte Walze dreht sich bei jedem Buchstaben, die mittlere und linke rücken nur an den Kerben weiter." />
+
+                    <Grid ColumnDefinitions="*,*,*"
+                          ColumnSpacing="8">
+                        <VerticalStackLayout Grid.Column="0" Spacing="4">
+                            <Label FontSize="12" TextColor="Gray" Text="links" />
+                            <Picker x:Name="pickerWalzeLinks"
+                                    Title="Walze"
+                                    SelectedIndexChanged="OnWalzeChanged" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1" Spacing="4">
+                            <Label FontSize="12" TextColor="Gray" Text="mitte" />
+                            <Picker x:Name="pickerWalzeMitte"
+                                    Title="Walze"
+                                    SelectedIndexChanged="OnWalzeChanged" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="2" Spacing="4">
+                            <Label FontSize="12" TextColor="Gray" Text="rechts" />
+                            <Picker x:Name="pickerWalzeRechts"
+                                    Title="Walze"
+                                    SelectedIndexChanged="OnWalzeChanged" />
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <Label FontSize="14"
+                           Text="Umkehrwalze" />
+
+                    <Picker x:Name="pickerUmkehrwalze"
+                            Title="Umkehrwalze wählen"
+                            SelectedIndexChanged="OnUmkehrwalzeChanged" />
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Karte 2: Ring- und Grundstellung -->
+            <Border BackgroundColor="Transparent"
+                    Stroke="Gray"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 8"
+                    Padding="16,12">
+                <VerticalStackLayout Spacing="12">
+
+                    <Label FontSize="18"
+                           FontAttributes="Bold"
+                           Text="Ringstellung und Grundstellung" />
+
+                    <Label FontSize="12"
+                           TextColor="Gray"
+                           Text="Die Ringstellung dreht das Alphabet gegen den Walzenkörper: Sie ändert, welche Buchstaben aufeinandertreffen, und verschiebt damit das Ergebnis. Die Grundstellung ist die Ausgangslage im Walzenfenster, bevor der erste Buchstabe getippt wird." />
+
+                    <Label FontSize="14" Text="Ringstellung (01–26)" />
+
+                    <Grid ColumnDefinitions="*,*,*"
+                          ColumnSpacing="8">
+                        <Picker x:Name="pickerRingLinks" Grid.Column="0" Title="links" SelectedIndexChanged="OnRingChanged" />
+                        <Picker x:Name="pickerRingMitte" Grid.Column="1" Title="mitte" SelectedIndexChanged="OnRingChanged" />
+                        <Picker x:Name="pickerRingRechts" Grid.Column="2" Title="rechts" SelectedIndexChanged="OnRingChanged" />
+                    </Grid>
+
+                    <Label FontSize="14" Text="Grundstellung (A–Z)" />
+
+                    <Grid ColumnDefinitions="*,*,*"
+                          ColumnSpacing="8">
+                        <Picker x:Name="pickerGrundLinks" Grid.Column="0" Title="links" SelectedIndexChanged="OnGrundChanged" />
+                        <Picker x:Name="pickerGrundMitte" Grid.Column="1" Title="mitte" SelectedIndexChanged="OnGrundChanged" />
+                        <Picker x:Name="pickerGrundRechts" Grid.Column="2" Title="rechts" SelectedIndexChanged="OnGrundChanged" />
+                    </Grid>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Karte 3: Steckerbrett -->
+            <Border BackgroundColor="Transparent"
+                    Stroke="Gray"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 8"
+                    Padding="16,12">
+                <VerticalStackLayout Spacing="12">
+
+                    <Label FontSize="18"
+                           FontAttributes="Bold"
+                           Text="Steckerbrett" />
+
+                    <Label FontSize="12"
+                           TextColor="Gray"
+                           Text="Bis zu zehn Buchstabenpaare, die vor und nach den Walzen vertauscht werden – z. B. „AB CD EF“. Jeder Buchstabe darf nur einmal vorkommen, ein Buchstabe kann nicht mit sich selbst gesteckt werden. Leer lassen heißt: kein Steckerbrett." />
+
+                    <Entry x:Name="entryStecker"
+                           Placeholder="z. B. AB CD EF"
+                           TextChanged="OnSteckerChanged"
+                           Unfocused="OnSteckerUnfocused" />
+
+                    <Label x:Name="lbSteckerHinweis"
+                           FontSize="12"
+                           TextColor="#C0392B"
+                           IsVisible="False"
+                           Text="" />
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Karte 4: Ausgabe -->
+            <Border BackgroundColor="Transparent"
+                    Stroke="Gray"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 8"
+                    Padding="16,12">
+                <VerticalStackLayout Spacing="12">
+
+                    <Label FontSize="18"
+                           FontAttributes="Bold"
+                           Text="Ausgabe und Zeichen" />
+
+                    <Label FontSize="12"
+                           TextColor="Gray"
+                           Text="Historisch wurde der Geheimtext in Fünfergruppen gefunkt. Für Lernzwecke lässt sich stattdessen die Wortgrenze des Klartexts erhalten. Umlaute werden vor dem Verschlüsseln umgeschrieben (Ä→AE, Ö→OE, Ü→UE, ß→SS); Ziffern und Satzzeichen fallen weg." />
+
+                    <Picker x:Name="pickerAusgabe"
+                            Title="Ausgabeformat wählen"
+                            SelectedIndexChanged="OnAusgabeChanged" />
+
+                    <Grid ColumnDefinitions="*,Auto"
+                          ColumnSpacing="12">
+                        <Label Grid.Column="0"
+                               FontSize="14"
+                               VerticalOptions="Center"
+                               Text="Umlaute umschreiben (Ä→AE, Ö→OE, Ü→UE, ß→SS)" />
+                        <Switch x:Name="switchUmlaute"
+                                Grid.Column="1"
+                                Toggled="OnUmlauteToggled" />
+                    </Grid>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Karte 5: Modus -->
+            <Border BackgroundColor="Transparent"
+                    Stroke="Gray"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 8"
+                    Padding="16,12">
+                <VerticalStackLayout Spacing="12">
+
+                    <Label FontSize="18"
+                           FontAttributes="Bold"
+                           Text="Modus" />
+
+                    <Label FontSize="12"
+                           TextColor="Gray"
+                           Text="Verschlüsseln und Entschlüsseln sind derselbe Weg durch die Walzen – deshalb braucht das Entschlüsseln dieselben Einstellungen wie das Verschlüsseln." />
+
+                    <Grid ColumnDefinitions="*,*"
+                          ColumnSpacing="8">
+                        <RadioButton x:Name="rbVerschluesseln"
+                                     Grid.Column="0"
+                                     Content="Verschlüsseln"
+                                     GroupName="enigmaModus"
+                                     CheckedChanged="OnModusChanged" />
+                        <RadioButton x:Name="rbEntschluesseln"
+                                     Grid.Column="1"
+                                     Content="Entschlüsseln"
+                                     GroupName="enigmaModus"
+                                     CheckedChanged="OnModusChanged" />
+                    </Grid>
+
+                    <BoxView HeightRequest="1" Color="Gray" Opacity="0.3" Margin="0,4" />
+
+                    <Label FontSize="14"
+                           FontAttributes="Bold"
+                           Text="Aktueller Schlüssel" />
+
+                    <Label x:Name="lbVorschau"
+                           FontSize="13"
+                           Text="" />
+
+                    <Button x:Name="btnSchliessen"
+                            Text="Schließen"
+                            Clicked="OnCloseClicked" />
+
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

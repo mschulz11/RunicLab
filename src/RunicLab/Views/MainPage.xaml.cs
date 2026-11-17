@@ -11,17 +11,22 @@ namespace RunicLab.Views
 
         private async void OnCaeserClicked(object? sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync(nameof(CodeCaeserVerfahren));
+            await Shell.Current.GoToAsync($"//{nameof(CodeCaeserVerfahren)}");
         }
 
         private async void OnPolybiusClicked(object? sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync(nameof(CodePolybius));
+            await Shell.Current.GoToAsync($"//{nameof(CodePolybius)}");
+        }
+
+        private async void OnEnigmaClicked(object? sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync($"//{nameof(CodeEnigma)}");
         }
 
         private async void OnAlKindiClicked(object? sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync(nameof(CodeAlKindi));
+            await Shell.Current.GoToAsync($"//{nameof(CodeAlKindi)}");
         }
         
         
